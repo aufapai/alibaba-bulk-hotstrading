@@ -1,0 +1,100 @@
+{
+  "alibaba_system_metadata": {
+    "catalog_standard": "Alibaba B2B Global Trade Standard 2026",
+    "platform_compliance": "GPSR EU 2023/988 & PT Waru Gunung Anti-Overclaim Matrix",
+    "last_updated": "2026-10-29",
+    "source_marketplace": "Shopee Official Store (Verified Reference)"
+  },
+  "product_identification": {
+    "sku": "PTR-002",
+    "product_name_shopee": "Petrova - Sepatu Boots Strength WB Hitam - Boots Air PVC",
+    "product_name_sanitized": "Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC",
+    "brand": "Petrova",
+    "model_series": "Petrova",
+    "price_idr": "77.500",
+    "sold_count": "Nyaman dipakai!",
+    "rating_score": ""
+  },
+  "manufacturer_and_export_entity": {
+    "legal_manufacturer": {
+      "name": "PT Waru Gunung",
+      "facility_location": "Karang Pilang, Mastrip, Surabaya, East Java, Indonesia",
+      "jurisdiction": "Republic of Indonesia",
+      "role": "OEM / Legal Footwear Manufacturer"
+    },
+    "export_partner_and_seller_of_record": {
+      "name": "PT Indo Sukses Semesta",
+      "brand_unit": "HOTS Trading",
+      "port_of_loading_primary": "Tanjung Perak Seaport (ID SUB), Surabaya",
+      "port_of_loading_secondary": "Tanjung Priok Seaport (ID TKG), Jakarta",
+      "role": "Authorized Global Export Distributor & B2B Seller of Record"
+    }
+  },
+  "side_to_side_white_background_specifications": {
+    "background_type": "Pure White (#FFFFFF / RGB 255, 255, 255)",
+    "camera_angle": "Lateral Profile (Side-to-Side 90-Degree Orthogonal View)",
+    "canvas_dimensions": "1000 x 1000 pixels (1:1 Square)",
+    "visual_clarity": "Clean isolated silhouette highlighting shaft height, collar curve, vamp contour, and cleated outsole profile",
+    "primary_side_asset": "side_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp"
+  },
+  "hero_image_specifications": {
+    "background_type": "Clean White / Light Neutral Studio",
+    "camera_angle": "3/4 Hero Perspective Front-Quarter View",
+    "canvas_dimensions": "1000 x 1000 pixels (1:1 Square)",
+    "primary_hero_asset": "hero_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp",
+    "source_shopee_cdn_url": "https://down-id.img.susercontent.com/file/sg-11134201-7rdxg-mdcnkze27wg026@resize_w640_nl"
+  },
+  "technical_specifications": {
+    "category_classification": "Safety Footwear (Impact Resistant)",
+    "toe_cap_protection": "Steel Toe Cap (Impact Resistant)",
+    "upper_material": "High-Grade Virgin Polyvinyl Chloride (PVC) / EVA Polymer",
+    "outsole_tread_pattern": "Heavy-Duty Cleated Lug Outsole with Deep Anti-Slip Siping Channels",
+    "waterproofing_level": "Water-Resistant Injection-Molded Seamless Construction",
+    "lining_material": "Quick-Drying Breathable Polyester Textile Mesh Lining",
+    "size_range_available": "EU 37 - 45 (UK 4 - 11, US 5 - 12)",
+    "colorways": "Standard Industrial Black / High-Visibility Yellow / Agriculture Green / Hygiene White",
+    "origin_country": "Made in Indonesia"
+  },
+  "b2b_commercial_functions": {
+    "primary_applications": "Industrial site protection, heavy equipment operations, warehouse safety, manufacturing floors.",
+    "recommended_industries": [
+      "Agricultural & Commercial Plantations (Oil Palm, Rice, Rubber)",
+      "Aquaculture, Marine Processing & Commercial Wet Markets",
+      "Civil Construction, Trenching & Heavy Infrastructure",
+      "Food Processing Facilities, Commercial Catering & Cleanroom Utility",
+      "Municipal Drainage, Disaster Relief & Heavy Monsoon Protection"
+    ],
+    "banned_claims_and_overclaim_removal": [
+      "No unverified CE PPE II/III claims without certified lab documentation",
+      "No unverified FDA medical device classification (AP Medic re-positioned to Workplace Hygiene Clogs)",
+      "No unverified motorcycle crash PPE claims (Allbike re-positioned to Water-Resistant Shoe Covers)"
+    ]
+  },
+  "packaging_and_logistics": {
+    "packaging_type": "Export Grade 5-Ply Corrugated Master Carton",
+    "pairs_per_carton": 12,
+    "estimated_carton_weight_kg": 18.5,
+    "container_loadability_20ft": "Approx. 3,600 - 4,200 pairs",
+    "container_loadability_40ft_hq": "Approx. 8,500 - 9,600 pairs",
+    "minimum_order_quantity_moq": "500 pairs (negotiable for trial orders)"
+  },
+  "local_assets_inventory": {
+    "folder_relative_path": "Shopee_Product_Assets/Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC",
+    "hero_image": "hero_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp",
+    "side_image": "side_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp",
+    "json_metadata": "Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.json"
+  },
+  "flow_ai_generation_prompts": {
+    "flow_prompt_slot1_hero": "Using the attached reference photos, create a professional e-commerce commercial studio product photograph of Petrova. Color: Hitam. Construction: high-grade injection-molded waterproof PVC with with impact-resistant steel toe cap reinforcement and heavy-duty slip-resistant cleated lug rubber sole. Front 3/4 hero perspective angle, standing upright, centered, occupying roughly 85% of frame. Seamless pure white background (RGB 255,255,255), soft even studio lighting, subtle natural contact shadow only underneath. Ultra-sharp focus, commercial catalogue 8k clarity, square 1:1 ratio. No text, no watermark, no extraneous props.",
+    "flow_prompt_slot2_side": "Using the attached reference photos, create a clean e-commerce commercial product photograph of Petrova (Hitam) from a straight orthogonal 90-degree lateral side profile view. Highlighting the boot shaft height, waterproof seamless contour, vamp curve, and heavy-duty slip-resistant cleated lug rubber sole thickness. Seamless pure white background (RGB 255,255,255), studio lighting, centered, 85% frame, square 1:1 ratio, sharp focus, no text, no watermark.",
+    "flow_settings": {
+      "aspect_ratio": "1:1",
+      "resolution": "1080p",
+      "engine": "Google Flow / Flow MCP (flow_agent_images)",
+      "credits_cost": 0,
+      "background_specification": "Pure White (#FFFFFF, RGB 255, 255, 255)",
+      "hero_reference_file": "hero_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp",
+      "side_reference_file": "side_Petrova_Sepatu_Boots_Strength_WB_Hitam_Boots_Air_PVC.webp"
+    }
+  }
+}
