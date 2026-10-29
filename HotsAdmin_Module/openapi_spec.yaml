@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: HOTS Trading - Alibaba B2B Export & Market Intelligence API
+  description: OpenAPI 3.0 specification for integrating Alibaba B2B Listing Generator, Live Forex, Carton Logistics, and System Catalog Ingestion into admin.hotstrading.com.
+  version: 1.0.0
+  contact:
+    name: PT Indo Sukses Semesta (HOTS Trading)
+    url: https://hotstrading.com
+    email: admin@hotstrading.com
+
+servers:
+  - url: http://localhost:8888
+    description: Local Python Desktop Engine
+  - url: https://admin.hotstrading.com/api/export
+    description: Production cPanel API Server
+
+paths:
+  /api/health:
+    get:
+      summary: Health check status
+      responses:
+        '200':
+          description: System healthy
+
+  /api/exchange_rate:
+    get:
+      summary: Get real-time USD/IDR exchange rate
+      responses:
+        '200':
+          description: Exchange rate returned
+
+  /api/calculate_carton:
+    post:
+      summary: Calculate carton packaging, CBM, container load, and HOTS service charges
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usd:
+                  type: number
+                  example: 5.50
+                idr:
+                  type: number
+                  example: 99290
+                pairs:
+                  type: integer
+                  default: 12
+                  example: 12
+                category:
+                  type: string
+                  example: AP Safety Boots
+      responses:
+        '200':
+          description: Calculation completed
+
+  /api/hots_catalog/preview:
+    get:
+      summary: Preview system products from hotstrading.com catalog
+      responses:
+        '200':
+          description: List of parsed system products
+
+  /api/hots_catalog/sync:
+    post:
+      summary: Sync system products into Alibaba Master database
+      responses:
+        '200':
+          description: Synchronization summary
+
+  /api/smart_top_pick:
+    post:
+      summary: Generate top products with country-tailored 4-slot AI prompts and packaging metrics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                continent:
+                  type: string
+                  example: Europe
+                destination_country:
+                  type: string
+                  example: Germany
+                category:
+                  type: string
+                  example: AP Safety Boots
+                mode:
+                  type: string
+                  enum: [top_sellers, flagship, random_sample]
+                count:
+                  type: integer
+                  default: 3
+      responses:
+        '200':
+          description: Generated tailored product packages
+
+  /api/failed_reports:
+    get:
+      summary: Get Alibaba failed upload reports summary
+      responses:
+        '200':
+          description: Audit report
+
+  /api/export_resolved_excel:
+    post:
+      summary: Export clean resolved Excel spreadsheet ready for Alibaba upload
+      responses:
+        '200':
+          description: Export completed

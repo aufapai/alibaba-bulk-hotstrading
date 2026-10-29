@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+
+# Large temporary outputs & archives
+Output/
+Output_PadiUMKM/
+output_images/
+Image Flow/
+datagambar photbank/
+*.zip
+*.tar.gz
+*.mp4
+
+# IDE and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store

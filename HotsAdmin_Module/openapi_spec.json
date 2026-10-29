@@ -1,0 +1,263 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "HOTS Trading - Alibaba B2B Export & Market Intelligence API",
+    "description": "RESTful OpenAPI specification for integrating Alibaba B2B Listing Generator, Live Forex, Carton Logistics, and System Catalog Ingestion into admin.hotstrading.com.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PT Indo Sukses Semesta (HOTS Trading)",
+      "url": "https://hotstrading.com",
+      "email": "admin@hotstrading.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8888",
+      "description": "Local Python Desktop Engine"
+    },
+    {
+      "url": "https://admin.hotstrading.com/api/export",
+      "description": "Production cPanel API Server"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health check status",
+        "description": "Returns operational status of local engine and database connectivity.",
+        "responses": {
+          "200": {
+            "description": "System healthy",
+            "content": {
+              "application/json": {
+                "example": { "status": "UP", "version": "1.0.0", "database": "CONNECTED", "total_products": 601 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/exchange_rate": {
+      "get": {
+        "summary": "Get real-time USD/IDR exchange rate",
+        "description": "Fetches current Google / Forex market rate cached for 30 minutes.",
+        "responses": {
+          "200": {
+            "description": "Exchange rate returned",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "usd_idr_rate": 18052.88,
+                  "source": "ExchangeRate API (Live Google Market Sync)",
+                  "updated_at": "2026-10-19 15:30:00"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/calculate_carton": {
+      "post": {
+        "summary": "Calculate carton packaging, CBM, container load, and HOTS service charges",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "usd": { "type": "number", "example": 5.50 },
+                  "idr": { "type": "number", "example": 99290 },
+                  "pairs": { "type": "integer", "default": 12, "example": 12 },
+                  "category": { "type": "string", "example": "AP Safety Boots" },
+                  "rate": { "type": "number", "description": "Optional custom rate", "example": null }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calculation completed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "data": {
+                    "unit_price_usd": 5.50,
+                    "unit_price_idr": 99291,
+                    "carton_price_usd": 66.00,
+                    "carton_price_idr": 1191490,
+                    "pairs_per_carton": 12,
+                    "specs": {
+                      "cbm_per_carton": 0.096,
+                      "carton_dimensions_cm": "60 x 40 x 40 cm",
+                      "gross_weight_kg_per_carton": 20.4
+                    },
+                    "container_capacity": {
+                      "container_20ft_cartons": 291,
+                      "container_20ft_pairs": 3492,
+                      "container_40ft_hc_cartons": 708,
+                      "container_40ft_hc_pairs": 8496
+                    },
+                    "hots_export_charges": {
+                      "member_regular_2pct": { "rate": "2.0%", "fee_per_pair_usd": 0.110, "fee_per_pair_idr": 1986 },
+                      "full_assistance_15pct": { "rate": "15.0%", "fee_per_pair_usd": 0.825, "fee_per_pair_idr": 14894 }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hots_catalog/preview": {
+      "get": {
+        "summary": "Preview system products from hotstrading.com catalog",
+        "description": "Reads products from MySQL dump or live database and parses images and pricing.",
+        "responses": {
+          "200": {
+            "description": "List of parsed system products",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "total_parsed": 82,
+                  "products": [
+                    { "system_id": 25, "sku": "AP-MX-01", "name": "AP Max", "base_price_idr": 311000.0, "category_group": "AP Safety Boots" }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hots_catalog/sync": {
+      "post": {
+        "summary": "Sync system products into Alibaba Master database",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "overwrite": { "type": "boolean", "default": false }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Synchronization summary",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "total_source_products": 82,
+                  "inserted": 0,
+                  "updated": 82,
+                  "live_exchange_rate": 18052.88
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/smart_top_pick": {
+      "post": {
+        "summary": "Generate top products with country-tailored 4-slot AI prompts and packaging metrics",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "continent": { "type": "string", "example": "Europe" },
+                  "destination_country": { "type": "string", "example": "Germany" },
+                  "category": { "type": "string", "example": "AP Safety Boots" },
+                  "mode": { "type": "string", "enum": ["top_sellers", "flagship", "random_sample"], "default": "top_sellers" },
+                  "count": { "type": "integer", "default": 3 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated tailored product packages",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "total_picked": 3,
+                  "target_continent": "Europe",
+                  "destination_country": "Germany",
+                  "products": [
+                    {
+                      "sku": "APB-S5-03",
+                      "product_name": "AP BOOTS SAFETY S5 YELLOW",
+                      "optimized_title": "Waterproof S5 Steel Toe Safety Work Boots Heavy Duty Industrial Footwear",
+                      "image_prompts": {
+                        "slot_1_hero": "Using the attached reference photos, create a professional e-commerce product photo...",
+                        "slot_2_side": "Using the attached reference photos, create a 90-degree side profile...",
+                        "slot_3_tread": "Using the attached reference photos, show outsole tread cleats...",
+                        "slot_4_contextual": "Using the attached reference photos, show in-use at a European construction site in Germany..."
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/failed_reports": {
+      "get": {
+        "summary": "Get Alibaba failed upload reports summary",
+        "description": "Lists rejected items from Alibaba Excel reports and resolution status.",
+        "responses": {
+          "200": {
+            "description": "Audit report",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "data": { "total_failed": 15, "image_issues": 14, "resolvable": 15, "resolved_rate": "100%" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/export_resolved_excel": {
+      "post": {
+        "summary": "Export clean resolved Excel spreadsheet ready for Alibaba upload",
+        "responses": {
+          "200": {
+            "description": "Export completed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "count": 15,
+                  "filename": "Alibaba_Bulk_Upload_Resolved_Images.xlsx",
+                  "download_url": "/api/download/Alibaba_Bulk_Upload_Resolved_Images.xlsx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
