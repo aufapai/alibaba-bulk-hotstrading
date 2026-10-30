@@ -121,3 +121,4 @@ with open('App/alibaba_manager_app.py', 'w', encoding='utf-8') as f:
     f.write(code)
 
 print("alibaba_manager_app.py successfully updated!")
+

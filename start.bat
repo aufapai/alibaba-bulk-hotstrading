@@ -34,3 +34,4 @@ echo.
 python App\alibaba_manager_app.py
 
 pause
+

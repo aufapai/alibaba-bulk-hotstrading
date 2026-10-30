@@ -626,12 +626,15 @@
         .prod-actions .btn { flex: 1; justify-content: center; }
 
         /* Modal Overlays */
+        .modal-overlay.active {
+            display: flex !important;
+        }
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(4px);
-            z-index: 200;
+            z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
@@ -4715,8 +4718,12 @@
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        const el = document.getElementById(modalId);
+        if (el) {
+            el.style.display = 'none';
+            el.classList.remove('active');
         }
+    }
 
         function calcTiers() {
             const p = parseFloat(document.getElementById('editPrice').value) || 0;
@@ -5544,7 +5551,7 @@
                         </div>
                     </div>
 
-                    <!-- Metrics Grid -->
+                    <!-- Metrics Grid (Hero-First Official Reference) -->
                     <div class="shopee-studio-metrics">
                         <div class="shopee-metric-card">
                             <div class="shopee-metric-num">${totalCount}</div>
@@ -5555,8 +5562,8 @@
                             <div class="shopee-metric-lbl">Hero WEBP Ready (hero_*.webp)</div>
                         </div>
                         <div class="shopee-metric-card">
-                            <div class="shopee-metric-num" style="color: #0284c7;">${sideReadyCount} / ${totalCount}</div>
-                            <div class="shopee-metric-lbl">Side View White BG Ready (side_*.webp)</div>
+                            <div class="shopee-metric-num" style="color: #0284c7;">4 Variasi Slot</div>
+                            <div class="shopee-metric-lbl">Photobank Generator (Hero, Side, Tread, Usage)</div>
                         </div>
                         <div class="shopee-metric-card">
                             <div class="shopee-metric-num" style="color: #7c3aed;">${jsonReadyCount} / ${totalCount}</div>
@@ -5627,14 +5634,16 @@
                         ? `/shopee-assets/${encodeURIComponent(p.folder_name)}/${encodeURIComponent(p.side_filename)}?v=${Date.now()}`
                         : (p.online_image_url || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text y="50" font-size="12">No Side</text></svg>');
 
+                    const isSelected = selectedShopeeFolders.has(p.folder_name);
                     html += `
-                    <div class="shopee-card" id="card-${p.folder_name}">
-                        <!-- Card Header -->
-                        <div class="shopee-card-header">
+                    <div class="shopee-card ${isSelected ? 'selected' : ''}" id="card-${p.folder_name}" style="${isSelected ? 'border: 2px solid #059669; background: #f0fdf4; box-shadow: 0 4px 16px rgba(5, 150, 105, 0.18);' : ''}">
+                        <!-- Card Header with Clear Selection Checkbox & Toggle -->
+                        <div class="shopee-card-header" style="cursor: pointer;" onclick="toggleShopeeCardSelection('${p.folder_name}', '${p.sku}', ${!isSelected})">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" class="shopee-card-checkbox" value="${p.folder_name}" ${selectedShopeeFolders.has(p.folder_name) ? 'checked' : ''} onchange="toggleShopeeCardSelection('${p.folder_name}', '${p.sku}', this.checked)" style="width: 17px; height: 17px; accent-color: #059669; cursor: pointer;">
+                                <input type="checkbox" class="shopee-card-checkbox" value="${p.folder_name}" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation()" onchange="toggleShopeeCardSelection('${p.folder_name}', '${p.sku}', this.checked)" style="width: 18px; height: 18px; accent-color: #059669; cursor: pointer;">
                                 <span class="shopee-badge-sku">${p.sku}</span>
                                 <span class="shopee-badge-brand ${brandClass}">${p.brand}</span>
+                                ${isSelected ? '<span style="background: #059669; color: #fff; font-size: 0.68rem; font-weight: 800; padding: 2px 7px; border-radius: 4px;">✓ TERPILIH</span>' : ''}
                             </div>
                             <div style="font-size: 0.92rem; font-weight: 800; color: #0f172a;">
                                 Rp ${p.price_idr || '-'}
@@ -5653,51 +5662,33 @@
                             </div>
                         </div>
 
-                        <!-- Dual Image View (Hero + Side View on White BG) -->
-                        <div class="shopee-dual-image-row">
-                            <!-- Hero Image -->
-                            <div class="shopee-img-box">
-                                <img src="${heroSrc}" alt="Hero Image" id="img-hero-${p.folder_name}" loading="lazy" onclick="window.open(this.src)">
-                                <div class="shopee-img-label">
-                                    <span>🌟</span>
-                                    <span>Hero: <code>${p.hero_filename.substring(0, 16)}...</code></span>
-                                </div>
-                                <span style="font-size: 0.68rem; color: ${p.hero_exists ? '#059669' : '#d97706'}; font-weight: 700;">
-                                    ${p.hero_exists ? '✅ Local WEBP' : '⚠️ Online CDN'}
-                                </span>
+                        <!-- Single Prominent Hero Image (Official Shopee Reference Only - No Fake Side) -->
+                        <div class="shopee-single-image-wrap" style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative;">
+                            <div style="flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 8px;">
+                                <img src="${heroSrc}" alt="Hero Image" id="img-hero-${p.folder_name}" loading="lazy" onclick="window.open(this.src)" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer; transition: transform 0.2s ease;">
                             </div>
-
-                            <!-- Side View Image (White BG) -->
-                            <div class="shopee-img-box">
-                                <img src="${sideSrc}" alt="Side View Image" id="img-side-${p.folder_name}" loading="lazy" onclick="window.open(this.src)">
-                                <div class="shopee-img-label">
-                                    <span>📐</span>
-                                    <span>Side: <code>${p.side_filename.substring(0, 16)}...</code></span>
-                                </div>
-                                <span style="font-size: 0.68rem; color: ${p.side_exists ? '#0284c7' : '#94a3b8'}; font-weight: 700;">
-                                    ${p.side_exists ? '✅ White BG Studio' : '⚠️ Belum Ada'}
+                            <div class="shopee-img-label" style="background: rgba(15, 23, 42, 0.88); color: #fff; padding: 6px 10px; font-size: 0.72rem; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="display: flex; align-items: center; gap: 4px;">
+                                    <span>🌟</span>
+                                    <span>Hero: <code>${p.hero_filename.substring(0, 22)}...</code></span>
+                                </span>
+                                <span style="color: ${p.hero_exists ? '#34d399' : '#fbbf24'}; font-weight: 700;">
+                                    ${p.hero_exists ? '✅ Local WEBP' : '⚠️ Online CDN'}
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Automated Image Inserter Dropzone -->
+                        <!-- Automated Hero Image Inserter Dropzone -->
                         <div class="shopee-dropzone-box" 
                              ondragover="handleShopeeDragOver(event)" 
                              ondragleave="handleShopeeDragLeave(event)" 
                              ondrop="handleShopeeDrop(event, '${p.folder_name}')"
                              onclick="triggerShopeeFileInput('${p.folder_name}')">
                             <div class="shopee-dropzone-title">
-                                <span>📤</span> Drag & Drop Foto Baru atau Klik untuk Input Foto
+                                <span>📤</span> Drag & Drop Foto Hero Baru atau Klik untuk Ganti
                             </div>
-                            <div class="shopee-upload-options" onclick="event.stopPropagation()">
-                                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-                                    <input type="radio" name="upload_target_${p.folder_name}" value="hero" checked>
-                                    <span>Jadikan Hero (hero_*.webp)</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-                                    <input type="radio" name="upload_target_${p.folder_name}" value="side">
-                                    <span>Jadikan Side (side_*.webp)</span>
-                                </label>
+                            <div style="font-size: 0.7rem; color: #9a3412; margin-top: 3px;">
+                                Otomatis disimpan sebagai <code>hero_${p.folder_name}.webp</code>
                             </div>
                             <input type="file" id="file-${p.folder_name}" accept="image/*" style="display: none;" onchange="handleShopeeFileSelect(event, '${p.folder_name}')">
                         </div>
@@ -5946,6 +5937,23 @@
             } else {
                 selectedShopeeFolders.delete(folder);
             }
+            // Dynamically update card styling without re-rendering entire grid
+            const card = document.getElementById(`card-${folder}`);
+            if (card) {
+                if (isChecked) {
+                    card.classList.add('selected');
+                    card.style.border = '2px solid #059669';
+                    card.style.background = '#f0fdf4';
+                    card.style.boxShadow = '0 4px 16px rgba(5, 150, 105, 0.18)';
+                } else {
+                    card.classList.remove('selected');
+                    card.style.border = '';
+                    card.style.background = '';
+                    card.style.boxShadow = '';
+                }
+                const chk = card.querySelector('.shopee-card-checkbox');
+                if (chk) chk.checked = isChecked;
+            }
             updateShopeeSelectionDisplay();
         }
 
@@ -6015,7 +6023,11 @@
             });
 
             populatePhotobankGenModal();
-            document.getElementById('photobankGenModal').classList.add('active');
+            const modal = document.getElementById('photobankGenModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('active');
+            }
         }
 
         function openPhotobankGenModalForSingle(sku, folder, productName) {
@@ -6026,7 +6038,11 @@
             }];
 
             populatePhotobankGenModal();
-            document.getElementById('photobankGenModal').classList.add('active');
+            const modal = document.getElementById('photobankGenModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('active');
+            }
         }
 
         function populatePhotobankGenModal() {
