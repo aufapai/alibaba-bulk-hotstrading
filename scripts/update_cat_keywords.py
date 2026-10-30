@@ -12,3 +12,4 @@ if target in text:
     print("Updated categories successfully!")
 else:
     print("Target not found, let's verify line")
+

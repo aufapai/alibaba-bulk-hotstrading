@@ -44,3 +44,4 @@ with open(out_file, "w", encoding="utf-8") as f:
     json.dump(output_data, f, indent=2, ensure_ascii=False)
 
 print(f"Generated {out_file} with {len(output_data)} products successfully!")
+

@@ -84,3 +84,4 @@ with open('App/template.html', 'w', encoding='utf-8') as f:
     f.write(html)
 
 print("Template patch complete!")
+
