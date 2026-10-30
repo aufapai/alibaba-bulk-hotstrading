@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👢</text></svg>">
     <title>Alibaba B2B & Multi-Marketplace Catalog Manager — AP Boots</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -1368,6 +1369,164 @@
         </div>
     </div>
 
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 2: FLAGSHIP 40 CHEATSHEET QUICK-VIEW -->
     <div class="modal-overlay" id="flagshipModal">
         <div class="modal-content" style="max-width: 1100px;">
@@ -1415,6 +1574,164 @@
                             <tr><td colspan="9" style="text-align: center; padding: 2rem;">Loading Flagship 40 list...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
                 </div>
             </div>
         </div>
@@ -1621,6 +1938,164 @@
         </div>
     </div>
 
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 4: SYNC INGESTION PROGRESS -->
     <div class="modal-overlay" id="syncModal">
         <div class="modal-content" style="max-width: 500px;">
@@ -1646,6 +2121,164 @@
                     <button class="btn btn-primary" id="btnSyncDone" style="display: none; width: 100%; justify-content: center;" onclick="closeModal('syncModal')">
                         Complete & Reload
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
                 </div>
             </div>
         </div>
@@ -1820,6 +2453,164 @@
         </div>
     </div>
 
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL: LIVE FOREX & CARTON PACKAGING CALCULATOR -->
     <div class="modal-overlay" id="calculatorModal">
         <div class="modal-content" style="max-width: 920px;">
@@ -1980,6 +2771,164 @@
         </div>
     </div>
 
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL: SMART TOP PICK & AI PACKAGE GENERATOR -->
     <div class="modal-overlay" id="topPickModal">
         <div class="modal-content" style="max-width: 980px;">
@@ -2080,6 +3029,164 @@
         </div>
     </div>
 
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 8: SHOPEE ALIBABA JSON VIEWER -->
     <div class="modal-overlay" id="shopeeJsonModal">
         <div class="modal-content" style="max-width: 900px; max-height: 90vh;">
@@ -2100,6 +3207,164 @@
                     <button class="btn btn-sm btn-export" onclick="downloadShopeeJson()">💾 Download .json</button>
                 </div>
                 <pre id="shopeeJsonContent" style="background: #0f172a; color: #38bdf8; padding: 1.25rem; border-radius: 8px; font-size: 0.82rem; max-height: 550px; overflow-y: auto; font-family: monospace; white-space: pre-wrap; word-break: break-all;"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 9: GOOGLE FLOW & PHOTOBANK ADMIN STUDIO -->
+    <div class="modal-overlay" id="flowPhotobankModal">
+        <div class="modal-content" style="max-width: 1100px; max-height: 92vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;" id="flowModalTitle">
+                            Google Flow & Photobank Admin Studio (4-Slot Architecture)
+                        </h3>
+                        <span class="badge" id="flowModalCategoryBadge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px;">
+                            07_Classic_Boots
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #a7f3d0; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 SKU: <strong id="flowModalSku" style="color: #fff;">SHP-001</strong></span>
+                        <span>📦 Target: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #6ee7b7; text-decoration: underline;">Google Flow (aufahots@gmail.com)</a></span>
+                        <span>🌐 Server: <a href="https://admin.hotstrading.com/photo-bank" target="_blank" style="color: #6ee7b7; text-decoration: underline;">admin.hotstrading.com/photo-bank</a></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flowPhotobankModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Control Action Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 12px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnRunFlowGen" onclick="runFlowGenerationNow()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 6px; padding: 8px 14px; box-shadow: 0 2px 5px rgba(5, 150, 105, 0.3);">
+                            ⚡ Generate 4 Variasi Slot
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminSim" onclick="uploadToPhotobankAdmin(true)" style="background: #0284c7; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🧪 Uji Coba Upload API (Simulasi)
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnUploadAdminReal" onclick="uploadToPhotobankAdmin(false)" style="background: #7c3aed; color: #fff; font-weight: 700; border-radius: 6px; padding: 8px 14px;">
+                            🚀 Push API ke Admin Photobank
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="openPhotobankFolder()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            📂 Buka Output Photobank
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; font-weight: 700; border-radius: 6px; padding: 8px 12px;">
+                            🎨 Buka Google Flow Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4 Slots Visual Cards -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #1e293b; margin: 0;">
+                            📸 4-Slot Standar Variasi Foto Produk (Alibaba & Photobank B2B)
+                        </h4>
+                        <span style="font-size: 0.78rem; color: #64748b;">Standar Rasio: 1:1 Square • Seamless Pure White (RGB 255,255,255) • Resolusi 1000px - 1600px</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;" id="flowSlotsContainer">
+                        <!-- Slot 1: Hero -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ecfdf5; padding: 3px 8px; border-radius: 6px;">Slot 1: Hero White BG</span>
+                                <span style="font-size: 0.7rem; color: #059669; font-weight: 700;" id="flowBadgeSlot1">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot1" src="" alt="Slot 1" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot1">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot1">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(1)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 2: Side Profile -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #0284c7; background: #f0f9ff; padding: 3px 8px; border-radius: 6px;">Slot 2: 90° Side Profile</span>
+                                <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;" id="flowBadgeSlot2">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot2" src="" alt="Slot 2" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot2">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot2">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(2)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 3: Outsole Tread -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; background: #fffbeb; padding: 3px 8px; border-radius: 6px;">Slot 3: Outsole Tread Cleats</span>
+                                <span style="font-size: 0.7rem; color: #d97706; font-weight: 700;" id="flowBadgeSlot3">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot3" src="" alt="Slot 3" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot3">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot3">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(3)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+
+                        <!-- Slot 4: Contextual In-Use -->
+                        <div class="flow-slot-card" style="background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 12px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.78rem; font-weight: 800; color: #7c3aed; background: #f5f3ff; padding: 3px 8px; border-radius: 6px;">Slot 4: Contextual In-Use</span>
+                                <span style="font-size: 0.7rem; color: #7c3aed; font-weight: 700;" id="flowBadgeSlot4">✅ Ready</span>
+                            </div>
+                            <div style="width: 100%; aspect-ratio: 1/1; background: #f8fafc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                <img id="flowImgSlot4" src="" alt="Slot 4" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" onclick="window.open(this.src)">
+                            </div>
+                            <div style="font-size: 0.72rem; font-family: monospace; color: #64748b; margin-bottom: 6px; word-break: break-all;" id="flowFileSlot4">-</div>
+                            <div style="background: #0f172a; color: #94a3b8; padding: 8px; border-radius: 6px; font-size: 0.7rem; line-height: 1.35; flex: 1; max-height: 90px; overflow-y: auto; margin-bottom: 8px;" id="flowPromptSlot4">
+                                Loading prompt...
+                            </div>
+                            <button type="button" class="btn btn-sm" onclick="copyFlowPrompt(4)" style="width: 100%; background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 0.72rem; font-weight: 700; color: #334155; padding: 5px;">
+                                📋 Copy Flow Prompt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photobank Status & Categories Breakdown -->
+                <div style="background: #ffffff; padding: 14px 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.92rem; font-weight: 800; color: #0f172a; margin: 0;">
+                            📊 Status Photobank Server & 11 Kategori Resmi (admin.hotstrading.com)
+                        </h4>
+                        <span id="photobankTotalBadge" style="font-size: 0.8rem; font-weight: 800; color: #059669; background: #d1fae5; padding: 3px 10px; border-radius: 20px;">
+                            Total: 421 Foto Siap Upload
+                        </span>
+                    </div>
+                    <div id="photobankCategoriesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; font-size: 0.75rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+
+                <!-- API Logs / Result Box -->
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8;">📡 API Response & Sync Payload:</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
+                    </div>
+                    <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
             </div>
         </div>
     </div>
@@ -2399,11 +3664,37 @@
             updateSelectionUI();
         }
 
-        function switchSourceTab(source) {
+        function switchSourceTab(source, evt = null) {
             activeSource = source;
             document.querySelectorAll('.source-tab').forEach(b => b.classList.remove('active'));
-            const targetBtn = (window.event && window.event.currentTarget) || (source === 'shopee_studio' ? document.getElementById('tabShopeeStudio') : null);
-            if (targetBtn) targetBtn.classList.add('active');
+            
+            let targetBtn = null;
+            if (evt && evt.currentTarget && evt.currentTarget.classList) {
+                targetBtn = evt.currentTarget;
+            } else if (source === 'shopee_studio') {
+                targetBtn = document.getElementById('tabShopeeStudio');
+            } else if (source === 'failed_reports') {
+                targetBtn = document.getElementById('tabFailedReports');
+            } else if (source === 'market_intel') {
+                targetBtn = document.getElementById('tabMarketIntel');
+            } else if (source === 'hots_system_catalog') {
+                targetBtn = document.getElementById('tabHotsCatalog');
+            }
+            
+            if (!targetBtn) {
+                const allTabs = document.querySelectorAll('.source-tab');
+                for (const b of allTabs) {
+                    const oc = b.getAttribute('onclick') || '';
+                    if (oc.includes(`'${source}'`)) {
+                        targetBtn = b;
+                        break;
+                    }
+                }
+            }
+            
+            if (targetBtn && targetBtn.classList) {
+                targetBtn.classList.add('active');
+            }
 
             const selBar = document.getElementById('selectionControlBar');
             const toolBar = document.querySelector('.toolbar');
@@ -3495,6 +4786,10 @@
                 document.getElementById('btnSubmitExport').disabled = false;
                 document.getElementById('btnCancelExport').disabled = false;
             }
+        }
+
+        function quickExportExcel(target = 'selected') {
+            openExportConfirmModal(target);
         }
 
         function exportBatch(target) {
