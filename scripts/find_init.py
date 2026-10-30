@@ -15,3 +15,4 @@ for term in ['window.onload', 'DOMContentLoaded', 'initApp', 'loadStats', 'loadP
         idx = pos + len(term)
         if idx > pos + 1000:
             break
+

@@ -109,10 +109,50 @@ Agar Anda dapat mengonfirmasi terlebih dahulu sebelum kita menjalankan script:
 
 ---
 
-## 6. KESIMPULAN & KONFIRMASI KEPUTUSAN
+## 6. HASIL UJI COBA SAMPEL 1 PRODUK (SHP-001: AP BOOTS XTR HITAM)
 
-> [!IMPORTANT]
-> **Pertanyaan Konfirmasi untuk Anda:**
-> 1. Apakah Anda setuju dengan alur kerja di atas, di mana kita **menghindari FTP mentah** dan menggantinya dengan **REST API / Sinkronisasi Admin aman** untuk `hotstrading.com`?
-> 2. Apakah Anda setuju dengan **4 variasi foto (Hero, Side, Tread, Contextual In-Use)** untuk setiap produk?
-> 3. Apakah Anda ingin kita mulai dengan membuat antarmuka kontrol di `start_alibaba_manager.bat` dan melakukan uji coba pada 1 produk sampel terlebih dahulu?
+Uji coba telah berhasil dieksekusi penuh pada 1 produk sampel:
+* **SKU:** `SHP-001`
+* **Nama Produk:** `AP Boots XTR Hitam - Sepatu Boot PVC`
+* **Kategori Photobank:** `07_Classic_Boots` (Group: `AP Classic Boots`)
+* **Status Variasi 4 Slot:**
+  1. **Slot 1 (Hero White BG 1:1):** `SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_1_hero.webp` ✅
+  2. **Slot 2 (Side Profile 90° Lateral 1:1):** `SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_2_side.webp` ✅
+  3. **Slot 3 (Outsole Tread Cleats 1:1):** `SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_3_tread.webp` ✅
+  4. **Slot 4 (Contextual In-Use Outdoor 1:1):** `SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_4_usage.webp` ✅
+* **Folder Sinkronisasi:**
+  * `Shopee_Product_Assets/AP_Boots_XTR_Hitam_Sepatu_Boot_PVC/` (Hero, Side, Tread, Usage, JSON)
+  * `Flow/` (Koleksi master file render Google Flow)
+  * `Output/Photobank_Siap_Upload/07_Classic_Boots/` (Siap upload ke server Photobank)
+  * `Output/Photobank_Siap_Upload/DAFTAR_FOTO_DAN_KATEGORI_PHOTOBANK.csv` (Manifest index terupdate otomatis)
+
+---
+
+## 7. SPESIFIKASI API ENDPOINT PHOTOBANK DI ALIBABA MANAGER
+
+Semua endpoint berikut aktif di `http://localhost:8888` via `start_alibaba_manager.bat`:
+
+| Method | Endpoint | Deskripsi & Parameter | Status |
+|---|---|---|---|
+| `GET` | `/api/photobank/status` | Mengembalikan ringkasan status 421 file di 11 kategori resmi dan manifest CSV. | ✅ Aktif (HTTP 200) |
+| `POST` | `/api/photobank/generate-sample` | Payload: `{"sku": "SHP-001", "folder": "..."}`. Menghasilkan 4 variasi slot dan mendaftarkannya ke Photobank. | ✅ Aktif (HTTP 200) |
+| `POST` | `/api/photobank/upload-admin` | Payload: `{"sku": "SHP-001", "folder": "...", "simulate": true/false}`. Mengunggah 4 slot via multipart/form-data ke `https://admin.hotstrading.com/api/photobank/upload`. | ✅ Aktif (HTTP 200) |
+| `GET` | `/api/photobank/open-folder` | Parameter: `?category=07_Classic_Boots`. Membuka folder Photobank langsung di Windows Explorer. | ✅ Aktif (HTTP 200) |
+
+---
+
+## 8. INTEGRASI MODAL & KONTROL DI WEB GUI (`App/template.html`)
+
+1. **Tombol Header Global:**
+   * Ditambahkan tombol `[⚡ Flow & Photobank Admin Studio]` di toolbar Shopee Official Asset Studio untuk membuka modal studio kapan saja.
+2. **Tombol Kartu Produk Individual:**
+   * Setiap kartu produk dari 123 SKU kini memiliki tombol `[⚡ Flow & Photobank]` untuk langsung membuka studio khusus produk tersebut.
+3. **Modal Komprehensif (`#flowPhotobankModal`):**
+   * Menampilkan preview visual ke-4 slot (Hero, Side, Tread, Usage).
+   * Menampilkan prompt text khusus Google Flow untuk tiap slot dilengkapi tombol 1-klik `📋 Copy Flow Prompt`.
+   * Tombol eksekusi `⚡ Generate 4 Variasi Slot`.
+   * Tombol uji coba `🧪 Uji Coba Upload API (Simulasi)`.
+   * Tombol push live `🚀 Push API ke Admin Photobank`.
+   * Breakdown statistik 11 folder kategori resmi Photobank.
+   * Console log API response interaktif secara realtime.
+

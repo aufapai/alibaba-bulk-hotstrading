@@ -43,6 +43,11 @@ from shopee_asset_manager import (
     get_all_shopee_products_status, process_single_product, process_all_shopee_products,
     save_uploaded_product_image, ASSETS_DIR, get_product_folder
 )
+from photobank_api_bridge import (
+    get_photobank_summary, generate_sample_4_variations,
+    upload_sku_slots_to_photobank_admin, PHOTOBANK_DIR,
+    FLOW_PROJECT_ID, FLOW_PROJECT_URL, FLOW_ACCOUNT_EMAIL
+)
 
 
 
@@ -711,6 +716,40 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_json({"success": False, "error": str(e)}, status=500)
             return
 
+        elif path == "/api/photobank/status":
+            try:
+                summary = get_photobank_summary()
+                self.send_json(summary)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/photobank/generate-sample":
+            try:
+                qp = urllib.parse.parse_qs(parsed.query)
+                sku = qp.get("sku", ["SHP-001"])[0]
+                folder = qp.get("folder", ["AP_Boots_XTR_Hitam_Sepatu_Boot_PVC"])[0]
+                res = generate_sample_4_variations(sku=sku, folder_name=folder)
+                self.send_json(res)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/photobank/open-folder":
+            try:
+                qp = urllib.parse.parse_qs(parsed.query)
+                cat = qp.get("category", [""])[0].strip()
+                tpath = os.path.join(PHOTOBANK_DIR, cat) if cat else PHOTOBANK_DIR
+                if os.path.exists(tpath):
+                    if sys.platform.startswith("win"):
+                        os.startfile(tpath)
+                    self.send_json({"success": True, "message": f"Opened {tpath}"})
+                else:
+                    self.send_json({"success": False, "error": "Folder not found"}, status=404)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
         self.send_error(404, "Endpoint not found")
 
     def do_POST(self):
@@ -1286,6 +1325,44 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_json({"success": True, "result": res})
                 else:
                     self.send_json({"success": False, "error": "Product not found"}, status=404)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/photobank/status":
+            try:
+                summary = get_photobank_summary()
+                self.send_json(summary)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/photobank/generate-sample":
+            try:
+                qp = urllib.parse.parse_qs(parsed.query)
+                sku = data.get("sku") or qp.get("sku", ["SHP-001"])[0]
+                folder = data.get("folder") or qp.get("folder", ["AP_Boots_XTR_Hitam_Sepatu_Boot_PVC"])[0]
+                res = generate_sample_4_variations(sku=sku, folder_name=folder)
+                self.send_json(res)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/photobank/upload-admin":
+            try:
+                sku = data.get("sku", "SHP-001")
+                folder = data.get("folder", "AP_Boots_XTR_Hitam_Sepatu_Boot_PVC")
+                simulate = data.get("simulate", True)
+                api_endpoint = data.get("api_endpoint", "https://admin.hotstrading.com/api/photobank/upload")
+                cookie = data.get("session_cookie", None)
+                res = upload_sku_slots_to_photobank_admin(
+                    sku=sku,
+                    folder_name=folder,
+                    api_endpoint=api_endpoint,
+                    session_cookie=cookie,
+                    simulate=simulate
+                )
+                self.send_json(res)
             except Exception as e:
                 self.send_json({"success": False, "error": str(e)}, status=500)
             return
