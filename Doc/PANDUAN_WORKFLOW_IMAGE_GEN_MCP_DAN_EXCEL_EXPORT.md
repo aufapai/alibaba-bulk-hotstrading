@@ -15,17 +15,28 @@ Berdasarkan kebutuhan operasional terbaru:
    * Data resmi dari official store Shopee hanya menyediakan 1 foto tampak depan/3-quarter (`hero_[nama].webp`).
    * Foto samping (*side image*) sebelumnya yang keliru telah **dihapus dari Shopee Asset Studio**.
    * Dari 1 foto Hero resmi inilah sistem lokal akan memproduksi 4 variasi slot untuk kebutuhan Photobank & Alibaba B2B.
-2. **Dua Pilihan Mesin Image Generation:**
-   * **Mode A: Native Standalone Engine (Tanpa MCP - Rekomendasi Utama):**
+2. **Tiga Pilihan Mesin Image Generation (Actual AI vs Local Canvas):**
+   * **Mode 1: 🚀 Actual Generative AI Studio (FLUX / Diffusion — Rekomendasi Utama):**
+     * Menghasilkan foto produk AI nyata yang fotorealistis berdasarkan spesifikasi JSON produk dan referensi foto.
+     * Menggenerasi tampak depan 3/4 studio, profil lateral 90°, foto makro tapak sol bergerigi anti-slip, dan foto pemakaian aktif di tanah perkebunan/pertanian becek nyata.
+     * Otomatis mengunduh dan menyimpannya langsung ke folder produk masing-masing (`hero_*.webp`, `side_*.webp`, `tread_*.webp`, `usage_*.webp`) tanpa perlu API key atau kuota.
+   * **Mode 2: 🔑 Google AI Studio / Imagen 3 (Direct Cloud API):**
+     * Terintegrasi langsung dengan endpoint Google AI Studio (`imagen-3.0-generate-002`). Pengguna dapat memasukkan API Key pribadi (`AIzaSy...`) langsung dari modal generator untuk hasil visual resolusi ultra-tinggi.
+   * **Mode 3: 📐 Studio Smart Canvas (Offline Local Standalone — Anti Kekecilan):**
      * 100% berjalan lokal di Python (`App/photobank_api_bridge.py`).
-     * Memotong kelebihan padding putih (*bounding box detection*), melakukan *upscale* berkualitas tinggi (*Lanczos Resampling + Unsharp Mask*), sehingga sepatu **mengisi 85% bingkai kanvas 1000×1000 px** berlatar putih `#FFFFFF` murni (tidak kekecilan).
-     * Sangat cepat, stabil, tanpa dependensi server eksternal, dan berjalan instan.
-   * **Mode B: Google Flow AI / MCP Engine (`aufahots@gmail.com`):**
-     * Menghubungkan prompt produk ke Google Flow Project (`5a88c3fd-477c-4eed-a126-f812ccfb079c`) melalui Flow SDK atau remote automation untuk menghasilkan variasi fotorealistis AI.
-3. **Tahap "Resolve & Review" Sebelum Upload:**
-   * Foto hasil generate harus ditinjau (*preview*) secara visual di Web GUI terlebih dahulu untuk memastikan resolusi tajam, rasio kanvas 1:1, dan framing 85%.
-4. **Tahap Ekspor ke Excel Alibaba & Sinkronisasi Photobank:**
-   * Setelah foto di-resolve, sistem mengaitkan path foto ke file JSON produk dan mengonversinya ke file **Alibaba Bulk Sheet (.xlsx)** siap impor, serta mendaftarkannya ke folder 11 kategori Photobank dan manifest CSV.
+     * Memotong kelebihan padding putih (*bounding box detection*), melakukan *upscale* berkualitas tinggi (*Lanczos Resampling + Unsharp Mask*), sehingga sepatu **mengisi 85% bingkai kanvas 1000×1000 px** berlatar putih `#FFFFFF` murni (bebas dari bug gambar kekecilan di tengah kanvas).
+     * Sangat cepat, stabil, tanpa dependensi internet/server.
+3. **Navigasi Atas Bersih & Bar Aksi Produk Terpilih (Clean Top Navigation):**
+   * Header utama dirapikan: 8 tombol utilitas dikelompokkan ke dalam dropdown **`[ 🛠️ Alibaba Tools & Utilities ▾ ]`**.
+   * Ketika produk dipilih (dicentang), **Bar Aksi Terpilih** langsung muncul secara mencolok di navigasi atas:
+     * **`🎯 [X] Produk Terpilih`**
+     * **`[ ⚡ Buat Image Generation (X Terpilih) ]`**
+     * **`[ 📑 Export to Excel (X Terpilih) ]`**
+     * **`[ ✖ Clear / Batalkan Pilihan ]`**
+4. **Tahap "Resolve & Review" Sebelum Upload:**
+   * Foto hasil generate dapat ditinjau (*preview*) secara visual di Web GUI terlebih dahulu untuk memastikan resolusi tajam, rasio kanvas 1:1, dan framing 85%.
+5. **Tahap Ekspor ke Excel Alibaba & Sinkronisasi Photobank:**
+   * Setelah foto di-resolve, pengguna cukup klik `[ 📑 Export to Excel ]` untuk langsung men-generate file **Alibaba Bulk Upload Sheet (.xlsx)** standar 57 kolom siap impor, serta mendaftarkannya ke folder 11 kategori Photobank dan manifest CSV.
 
 ---
 
@@ -164,3 +175,4 @@ Cukup klik ganda file launcher di folder utama:
 start.bat
 ```
 Server lokal akan aktif di `http://localhost:8888` dan peramban web akan terbuka otomatis.
+

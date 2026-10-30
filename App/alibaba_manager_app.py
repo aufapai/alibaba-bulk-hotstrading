@@ -102,6 +102,73 @@ def export_flagship_40_excel():
     wb.save(EXPORT_PATH_40)
     return len(f40)
 
+def export_shopee_selected_to_excel(shopee_folders, target_path):
+    """
+    Exports selected Shopee products directly into official 57-column Alibaba template
+    with 4-slot visual variations and B2B pricing.
+    """
+    wb = openpyxl.load_workbook(TEMPLATE_PATH)
+    ws = wb['Alibaba default template']
+    if ws.max_row >= 5:
+        ws.delete_rows(5, ws.max_row - 4)
+
+    for idx, folder in enumerate(shopee_folders, start=1):
+        row_idx = 4 + idx
+        folder_dir = os.path.join(ASSETS_DIR, folder)
+        json_file = os.path.join(folder_dir, f"{folder}.json")
+        info = {}
+        if os.path.exists(json_file):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as jf:
+                    info = json.load(jf)
+            except Exception:
+                pass
+        
+        prod_id = info.get("product_identification", {})
+        title = prod_id.get("product_name_shopee") or folder.replace("_", " ")
+        sku = prod_id.get("official_sku", f"SHP-{idx:03d}")
+        brand = prod_id.get("brand", "AP Boots")
+        
+        imgs = [
+            f"https://admin.hotstrading.com/photobank/hero_{folder}.webp",
+            f"https://admin.hotstrading.com/photobank/side_{folder}.webp",
+            f"https://admin.hotstrading.com/photobank/tread_{folder}.webp",
+            f"https://admin.hotstrading.com/photobank/usage_{folder}.webp",
+            info.get("source_reference", {}).get("image_url", ""),
+            ""
+        ]
+        
+        price_idr = float(info.get("pricing_and_inventory", {}).get("price_idr", 75000))
+        price_usd = round(price_idr / 16500.0, 2)
+        if price_usd < 2.0:
+            price_usd = 4.85
+        
+        desc = (
+            f"<p><strong>{title}</strong></p>"
+            f"<p>Official heavy-duty waterproof footwear manufactured in Indonesia by PT Waru Gunung. "
+            f"Distributed internationally by PT Indo Sukses Semesta.</p>"
+            f"<p>Features: 100% waterproof PVC compound, slip-resistant cleated sole, anti-fungal lining.</p>"
+        )
+        
+        row_data = [
+            title,
+            imgs[0], imgs[1], imgs[2], imgs[3], imgs[4], imgs[5],
+            desc,
+            "Indonesia", brand, "Shoes & Accessories > Men's Shoes > Boots",
+            "Outsole Material", "PVC / Rubber", "Upper Material", "PVC", "Season", "All Seasons",
+            "Feature", "100% Waterproof, Anti-Slip, Durable, Mud-Release", "Gender", "Men / Unisex", "piece", None, "Pair/Pairs",
+            "USD", "Tiered pricing", 5000, folder[:20], sku, price_usd,
+            "Color", "Standard Export Assorted", "Size", "EU 38-44",
+            None, None, None, None,
+            price_usd, 100, round(price_usd*0.95, 2), 500, round(price_usd*0.90, 2), 1000, round(price_usd*0.85, 2), price_usd,
+            1.7, "Default Shipping Template", 100, 7, 500, 14, 1000, 30, 60.0, 42.0, 38.0
+        ]
+        for col_idx, val in enumerate(row_data, start=1):
+            ws.cell(row=row_idx, column=col_idx, value=val)
+
+    wb.save(target_path)
+    return len(shopee_folders)
+
 def export_top_pick_to_excel(packages, destination_country=None):
     """
     Exports generated Smart Top Pick packages directly into the official 57-column
@@ -992,6 +1059,7 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
             fmt = data.get("format", "xlsx").lower()
             target = data.get("target", "master").lower()
             product_ids = data.get("product_ids", [])
+            shopee_folders = data.get("shopee_folders", [])
             regenerate_keywords = data.get("regenerate_keywords", False)
             keyword_mode = data.get("keyword_mode", "accio")
             preferred_angle = data.get("preferred_angle", None)
@@ -1022,6 +1090,10 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 if target == "flagship_40":
                     cnt = export_flagship_40_excel()
                     fname = os.path.basename(EXPORT_PATH_40)
+                elif target == "selected" and shopee_folders:
+                    fname = f"Alibaba_Bulk_Export_Shopee_Selected_{len(shopee_folders)}_Items.xlsx"
+                    fpath = os.path.join(BASE_DIR, "Output", fname)
+                    cnt = export_shopee_selected_to_excel(shopee_folders, fpath)
                 elif target == "selected" and product_ids:
                     pids = [int(x) for x in product_ids]
                     if fmt == "csv":
@@ -1378,6 +1450,8 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 save_to_shopee = bool(data.get("save_to_shopee", True))
                 save_to_flow = bool(data.get("save_to_flow", True))
                 save_to_photobank = bool(data.get("save_to_photobank", True))
+                engine = data.get("engine", "ai_flux")
+                api_key = data.get("api_key", None)
                 
                 res = generate_product_variations_custom(
                     sku=sku,
@@ -1387,7 +1461,9 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     fill_ratio=fill_ratio,
                     save_to_shopee=save_to_shopee,
                     save_to_flow=save_to_flow,
-                    save_to_photobank=save_to_photobank
+                    save_to_photobank=save_to_photobank,
+                    engine=engine,
+                    api_key=api_key
                 )
                 self.send_json(res)
             except Exception as e:
@@ -1403,6 +1479,8 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 save_to_shopee = bool(data.get("save_to_shopee", True))
                 save_to_flow = bool(data.get("save_to_flow", True))
                 save_to_photobank = bool(data.get("save_to_photobank", True))
+                engine = data.get("engine", "ai_flux")
+                api_key = data.get("api_key", None)
 
                 res = batch_generate_products_custom(
                     items=items,
@@ -1411,7 +1489,9 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     fill_ratio=fill_ratio,
                     save_to_shopee=save_to_shopee,
                     save_to_flow=save_to_flow,
-                    save_to_photobank=save_to_photobank
+                    save_to_photobank=save_to_photobank,
+                    engine=engine,
+                    api_key=api_key
                 )
                 self.send_json(res)
             except Exception as e:

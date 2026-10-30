@@ -11,6 +11,9 @@ import sys
 import json
 import csv
 import re
+import io
+import base64
+import urllib.parse
 import shutil
 from typing import Dict, Any, List, Optional
 from PIL import Image, ImageOps, ImageFilter
@@ -86,6 +89,52 @@ def fit_to_studio_canvas(img: Image.Image, target_size=(1000, 1000), fill_ratio=
     paste_y = (target_size[1] - new_h) // 2
     canvas.paste(resized, (paste_x, paste_y))
     return canvas
+
+
+def fetch_ai_generated_image(prompt: str, target_size: int = 1000, model: str = "flux", timeout: int = 40) -> Optional[Image.Image]:
+    """
+    Generate high-clarity photorealistic e-commerce imagery using real Generative AI Diffusion.
+    Produces high-fidelity 1:1 footwear imagery directly matching JSON prompt specifications.
+    """
+    try:
+        encoded_prompt = urllib.parse.quote(prompt)
+        gen_dim = min(1024, max(768, target_size))
+        gen_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width={gen_dim}&height={gen_dim}&nologo=true&model={model}"
+        resp = requests.get(gen_url, timeout=timeout)
+        if resp.status_code == 200 and 'image' in resp.headers.get('Content-Type', ''):
+            raw_img = Image.open(io.BytesIO(resp.content))
+            return raw_img.convert('RGB')
+    except Exception as e:
+        print(f"[AI Gen Error] {e}")
+    return None
+
+
+def fetch_google_ai_studio_image(prompt: str, api_key: str, target_size: int = 1000) -> Optional[Image.Image]:
+    """
+    Call Google AI Studio Imagen 3 endpoint if a valid user key (AIzaSy...) is provided.
+    """
+    if not api_key or not api_key.startswith("AIza"):
+        return None
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key={api_key}"
+        payload = {
+            "instances": [{"prompt": prompt}],
+            "parameters": {
+                "sampleCount": 1,
+                "aspectRatio": "1:1",
+                "outputMimeType": "image/jpeg"
+            }
+        }
+        resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=45)
+        if resp.status_code == 200:
+            data = resp.json()
+            predictions = data.get("predictions", [])
+            if predictions and "bytesBase64Encoded" in predictions[0]:
+                raw_bytes = base64.b64decode(predictions[0]["bytesBase64Encoded"])
+                return Image.open(io.BytesIO(raw_bytes)).convert("RGB")
+    except Exception as e:
+        print(f"[Google AI Studio Error] {e}")
+    return None
 
 def find_catalog_candidate(product_name: str, slot_suffix: str = "03") -> Optional[str]:
     """Finds matching catalog photo for outsole tread (03) or contextual usage (04)."""
@@ -207,12 +256,15 @@ def generate_product_variations_custom(
     fill_ratio: float = 0.85,
     save_to_shopee: bool = True,
     save_to_flow: bool = True,
-    save_to_photobank: bool = True
+    save_to_photobank: bool = True,
+    engine: str = "ai_flux",
+    api_key: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Generate customized product image variations without MCP.
+    Generate customized product image variations with Actual AI Generative Diffusion or Standalone Engine.
     Allows selecting which slots to generate (e.g. [1, 2, 3, 4] or [1, 2] or [3] or [4]),
-    target canvas size (1000, 1200, 1600), fill ratio, and output destinations.
+    target canvas size (1000, 1200, 1600), fill ratio, generation engine (ai_flux, google_ai_studio, offline_canvas),
+    and output destinations.
     """
     if slots is None or len(slots) == 0:
         slots = [1, 2, 3, 4]
@@ -254,7 +306,18 @@ def generate_product_variations_custom(
     if 1 in slots:
         slot1_name = f"{base_name}_slot_1_hero.webp"
         slot1_dest = os.path.join(dest_cat_dir, slot1_name) if save_to_photobank else os.path.join(prod_folder, slot1_name)
-        if os.path.exists(hero_src):
+        
+        slot1_prompt = f"commercial studio product photograph of {raw_title}, 3/4 front angle, standing upright, pure seamless white background (RGB 255,255,255), soft studio box lighting, crisp waterproof PVC rubber boot texture, clean sole treads, photorealistic 8k, square 1:1, no watermark, no text"
+        gen_img = None
+        if engine == "google_ai_studio" and api_key:
+            gen_img = fetch_google_ai_studio_image(slot1_prompt, api_key, target_size)
+        elif engine == "ai_flux":
+            gen_img = fetch_ai_generated_image(slot1_prompt, target_size)
+
+        if gen_img:
+            fitted_hero = fit_to_studio_canvas(gen_img, target_size=(target_size, target_size), fill_ratio=fill_ratio)
+            fitted_hero.save(slot1_dest, "WEBP", quality=92)
+        elif os.path.exists(hero_src):
             with Image.open(hero_src) as h_img:
                 fitted_hero = fit_to_studio_canvas(h_img, target_size=(target_size, target_size), fill_ratio=fill_ratio)
                 fitted_hero.save(slot1_dest, "WEBP", quality=92)
@@ -268,20 +331,32 @@ def generate_product_variations_custom(
             shutil.copy2(slot1_dest, os.path.join(FLOW_DIR, f"hero_{folder_name}.webp"))
         if save_to_photobank:
             append_manifest_record(os.path.basename(hero_src) if os.path.exists(hero_src) else "hero_white_bg", slot1_name, sku, raw_title, target_group, target_category_folder, slot1_dest)
-        results.append({"slot": 1, "type": "hero_white_bg", "filename": slot1_name, "path": slot1_dest})
+        results.append({"slot": 1, "type": "hero_white_bg", "filename": slot1_name, "path": slot1_dest, "ai_generated": gen_img is not None})
 
     # Slot 2: Side Profile 90-degree Lateral
     if 2 in slots:
         slot2_name = f"{base_name}_slot_2_side.webp"
         slot2_dest = os.path.join(dest_cat_dir, slot2_name) if save_to_photobank else os.path.join(prod_folder, slot2_name)
-        side_source_file = side_src if os.path.exists(side_src) else (hero_src if os.path.exists(hero_src) else None)
-        if side_source_file and os.path.exists(side_source_file):
-            with Image.open(side_source_file) as s_img:
-                fitted_side = fit_to_studio_canvas(s_img, target_size=(target_size, target_size), fill_ratio=fill_ratio)
-                fitted_side.save(slot2_dest, "WEBP", quality=92)
+        
+        slot2_prompt = f"orthogonal 90-degree lateral side profile product photograph of {raw_title}, perfectly level horizontal side angle showing shaft height, ankle contour, and sole profile, seamless pure white background (RGB 255,255,255), studio softbox lighting, square 1:1, crisp detail, no text"
+        gen_img2 = None
+        if engine == "google_ai_studio" and api_key:
+            gen_img2 = fetch_google_ai_studio_image(slot2_prompt, api_key, target_size)
+        elif engine == "ai_flux":
+            gen_img2 = fetch_ai_generated_image(slot2_prompt, target_size)
+
+        if gen_img2:
+            fitted_side = fit_to_studio_canvas(gen_img2, target_size=(target_size, target_size), fill_ratio=fill_ratio)
+            fitted_side.save(slot2_dest, "WEBP", quality=92)
         else:
-            img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
-            img.save(slot2_dest, "WEBP", quality=90)
+            side_source_file = side_src if os.path.exists(side_src) else (hero_src if os.path.exists(hero_src) else None)
+            if side_source_file and os.path.exists(side_source_file):
+                with Image.open(side_source_file) as s_img:
+                    fitted_side = fit_to_studio_canvas(s_img, target_size=(target_size, target_size), fill_ratio=fill_ratio)
+                    fitted_side.save(slot2_dest, "WEBP", quality=92)
+            else:
+                img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
+                img.save(slot2_dest, "WEBP", quality=90)
             
         if save_to_shopee:
             shutil.copy2(slot2_dest, os.path.join(prod_folder, f"side_{folder_name}.webp"))
@@ -289,27 +364,39 @@ def generate_product_variations_custom(
             shutil.copy2(slot2_dest, os.path.join(FLOW_DIR, f"side_{folder_name}.webp"))
         if save_to_photobank:
             append_manifest_record(os.path.basename(side_src) if os.path.exists(side_src) else "side_profile_90deg", slot2_name, sku, raw_title, target_group, target_category_folder, slot2_dest)
-        results.append({"slot": 2, "type": "side_profile_90deg", "filename": slot2_name, "path": slot2_dest})
+        results.append({"slot": 2, "type": "side_profile_90deg", "filename": slot2_name, "path": slot2_dest, "ai_generated": gen_img2 is not None})
 
     # Slot 3: Outsole Tread Detail
     if 3 in slots:
         slot3_name = f"{base_name}_slot_3_tread.webp"
         slot3_dest = os.path.join(dest_cat_dir, slot3_name) if save_to_photobank else os.path.join(prod_folder, slot3_name)
-        tread_candidate = find_catalog_candidate(raw_title, "03") or find_catalog_candidate(folder_name, "03")
+        
+        slot3_prompt = f"extreme close-up macro commercial product photo of the bottom outsole tread of {raw_title}, showcasing heavy-duty anti-slip cleat lugs and mud-release channel patterns, pure seamless white background (RGB 255,255,255), studio macro lighting, square 1:1, sharp focus, no text"
+        gen_img3 = None
+        if engine == "google_ai_studio" and api_key:
+            gen_img3 = fetch_google_ai_studio_image(slot3_prompt, api_key, target_size)
+        elif engine == "ai_flux":
+            gen_img3 = fetch_ai_generated_image(slot3_prompt, target_size)
+
         tread_ratio = min(0.92, fill_ratio + 0.03)
-        if tread_candidate and os.path.exists(tread_candidate):
-            with Image.open(tread_candidate) as t_img:
-                fitted_tread = fit_to_studio_canvas(t_img, target_size=(target_size, target_size), fill_ratio=tread_ratio, enhance=True)
-                fitted_tread.save(slot3_dest, "WEBP", quality=92)
-        elif os.path.exists(hero_src):
-            with Image.open(hero_src) as h_img:
-                w, h = h_img.size
-                sole_crop = h_img.crop((0, int(h * 0.62), w, h))
-                fitted_tread = fit_to_studio_canvas(sole_crop, target_size=(target_size, target_size), fill_ratio=tread_ratio, enhance=True)
-                fitted_tread.save(slot3_dest, "WEBP", quality=92)
+        if gen_img3:
+            fitted_tread = fit_to_studio_canvas(gen_img3, target_size=(target_size, target_size), fill_ratio=tread_ratio, enhance=True)
+            fitted_tread.save(slot3_dest, "WEBP", quality=92)
         else:
-            img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
-            img.save(slot3_dest, "WEBP", quality=90)
+            tread_candidate = find_catalog_candidate(raw_title, "03") or find_catalog_candidate(folder_name, "03")
+            if tread_candidate and os.path.exists(tread_candidate):
+                with Image.open(tread_candidate) as t_img:
+                    fitted_tread = fit_to_studio_canvas(t_img, target_size=(target_size, target_size), fill_ratio=tread_ratio, enhance=True)
+                    fitted_tread.save(slot3_dest, "WEBP", quality=92)
+            elif os.path.exists(hero_src):
+                with Image.open(hero_src) as h_img:
+                    w, h = h_img.size
+                    sole_crop = h_img.crop((0, int(h * 0.62), w, h))
+                    fitted_tread = fit_to_studio_canvas(sole_crop, target_size=(target_size, target_size), fill_ratio=tread_ratio, enhance=True)
+                    fitted_tread.save(slot3_dest, "WEBP", quality=92)
+            else:
+                img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
+                img.save(slot3_dest, "WEBP", quality=90)
             
         if save_to_shopee:
             shutil.copy2(slot3_dest, os.path.join(prod_folder, f"tread_{folder_name}.webp"))
@@ -317,24 +404,36 @@ def generate_product_variations_custom(
             shutil.copy2(slot3_dest, os.path.join(FLOW_DIR, f"tread_{folder_name}.webp"))
         if save_to_photobank:
             append_manifest_record("outsole_tread_detail", slot3_name, sku, raw_title, target_group, target_category_folder, slot3_dest)
-        results.append({"slot": 3, "type": "outsole_tread_cleats", "filename": slot3_name, "path": slot3_dest})
+        results.append({"slot": 3, "type": "outsole_tread_cleats", "filename": slot3_name, "path": slot3_dest, "ai_generated": gen_img3 is not None})
 
     # Slot 4: Contextual In-Use Outdoor
     if 4 in slots:
         slot4_name = f"{base_name}_slot_4_usage.webp"
         slot4_dest = os.path.join(dest_cat_dir, slot4_name) if save_to_photobank else os.path.join(prod_folder, slot4_name)
-        usage_candidate = find_catalog_candidate(raw_title, "04") or find_catalog_candidate(folder_name, "04")
-        if usage_candidate and os.path.exists(usage_candidate):
-            with Image.open(usage_candidate) as u_img:
-                fitted_usage = fit_to_studio_canvas(u_img, target_size=(target_size, target_size), fill_ratio=fill_ratio, enhance=True)
-                fitted_usage.save(slot4_dest, "WEBP", quality=92)
-        elif os.path.exists(hero_src):
-            with Image.open(hero_src) as h_img:
-                fitted_usage = fit_to_studio_canvas(h_img, target_size=(target_size, target_size), fill_ratio=fill_ratio, enhance=True)
-                fitted_usage.save(slot4_dest, "WEBP", quality=92)
+        
+        slot4_prompt = f"photorealistic outdoor action photo of {raw_title} waterproof boots being actively worn on wet agricultural plantation muddy ground and damp soil, lower-body framing from knees down, realistic daytime sunlight, puddles and mud on boot lower, photorealistic, square 1:1, no faces"
+        gen_img4 = None
+        if engine == "google_ai_studio" and api_key:
+            gen_img4 = fetch_google_ai_studio_image(slot4_prompt, api_key, target_size)
+        elif engine == "ai_flux":
+            gen_img4 = fetch_ai_generated_image(slot4_prompt, target_size)
+
+        if gen_img4:
+            fitted_usage = gen_img4.resize((target_size, target_size), Image.Resampling.LANCZOS)
+            fitted_usage.save(slot4_dest, "WEBP", quality=92)
         else:
-            img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
-            img.save(slot4_dest, "WEBP", quality=90)
+            usage_candidate = find_catalog_candidate(raw_title, "04") or find_catalog_candidate(folder_name, "04")
+            if usage_candidate and os.path.exists(usage_candidate):
+                with Image.open(usage_candidate) as u_img:
+                    fitted_usage = fit_to_studio_canvas(u_img, target_size=(target_size, target_size), fill_ratio=fill_ratio, enhance=True)
+                    fitted_usage.save(slot4_dest, "WEBP", quality=92)
+            elif os.path.exists(hero_src):
+                with Image.open(hero_src) as h_img:
+                    fitted_usage = fit_to_studio_canvas(h_img, target_size=(target_size, target_size), fill_ratio=fill_ratio, enhance=True)
+                    fitted_usage.save(slot4_dest, "WEBP", quality=92)
+            else:
+                img = Image.new("RGB", (target_size, target_size), (255, 255, 255))
+                img.save(slot4_dest, "WEBP", quality=90)
             
         if save_to_shopee:
             shutil.copy2(slot4_dest, os.path.join(prod_folder, f"usage_{folder_name}.webp"))
@@ -342,7 +441,7 @@ def generate_product_variations_custom(
             shutil.copy2(slot4_dest, os.path.join(FLOW_DIR, f"usage_{folder_name}.webp"))
         if save_to_photobank:
             append_manifest_record("contextual_in_use", slot4_name, sku, raw_title, target_group, target_category_folder, slot4_dest)
-        results.append({"slot": 4, "type": "contextual_in_use", "filename": slot4_name, "path": slot4_dest})
+        results.append({"slot": 4, "type": "contextual_in_use", "filename": slot4_name, "path": slot4_dest, "ai_generated": gen_img4 is not None})
 
     # Update product JSON with slots metadata
     slot1_name_val = f"{base_name}_slot_1_hero.webp"
@@ -411,7 +510,9 @@ def batch_generate_products_custom(
     fill_ratio: float = 0.85,
     save_to_shopee: bool = True,
     save_to_flow: bool = True,
-    save_to_photobank: bool = True
+    save_to_photobank: bool = True,
+    engine: str = "ai_flux",
+    api_key: Optional[str] = None
 ) -> Dict[str, Any]:
     """Batch generate image variations for multiple selected products."""
     results = []
@@ -431,7 +532,9 @@ def batch_generate_products_custom(
                 fill_ratio=fill_ratio,
                 save_to_shopee=save_to_shopee,
                 save_to_flow=save_to_flow,
-                save_to_photobank=save_to_photobank
+                save_to_photobank=save_to_photobank,
+                engine=engine,
+                api_key=api_key
             )
             if res.get("success"):
                 results.append(res)

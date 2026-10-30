@@ -83,5 +83,40 @@
     "hero_image": "hero_AP_Boots_AP_2011_Hijau_Sepatu_Boot_PVC.webp",
     "side_image": "side_AP_Boots_AP_2011_Hijau_Sepatu_Boot_PVC.webp",
     "json_metadata": "AP_Boots_AP_2011_Hijau_Sepatu_Boot_PVC.json"
+  },
+  "google_flow_and_photobank_slots": {
+    "google_flow_target": {
+      "account": "aufahots@gmail.com",
+      "project_id": "5a88c3fd-477c-4eed-a126-f812ccfb079c",
+      "project_url": "https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c"
+    },
+    "slots_generated": {
+      "slot_1_hero": {
+        "file": "SHP_017_AP_Boots_AP_2011_Hijau_Se_slot_1_hero.webp",
+        "type": "Hero White BG 1:1",
+        "prompt": "Using the attached reference photos, create a professional e-commerce commercial studio product photograph of AP Boots AP 2011 Hijau - Sepatu Boot PVC. Front 3/4 angle, standing upright, centered, occupying 85% frame. Seamless pure white background (RGB 255,255,255), soft even studio lighting, subtle contact shadow. 8k clarity, square 1:1 ratio, no text."
+      },
+      "slot_2_side": {
+        "file": "SHP_017_AP_Boots_AP_2011_Hijau_Se_slot_2_side.webp",
+        "type": "Side Profile 90-degree Lateral 1:1",
+        "prompt": "Using the attached reference photos, create a clean e-commerce commercial product photograph of AP Boots AP 2011 Hijau - Sepatu Boot PVC from a straight orthogonal 90-degree lateral side profile view. Highlighting boot shaft height, waterproof seamless contour, and sole thickness. Seamless pure white background (RGB 255,255,255), square 1:1 ratio, no text."
+      },
+      "slot_3_tread": {
+        "file": "SHP_017_AP_Boots_AP_2011_Hijau_Se_slot_3_tread.webp",
+        "type": "Outsole Tread Cleat Detail 1:1",
+        "prompt": "Using the attached reference photos, create a high-definition commercial product photo of AP Boots AP 2011 Hijau - Sepatu Boot PVC showcasing the bottom outsole tread pattern and anti-slip traction lugs. Pure white background (RGB 255,255,255), square 1:1 ratio, sharp focus."
+      },
+      "slot_4_usage": {
+        "file": "SHP_017_AP_Boots_AP_2011_Hijau_Se_slot_4_usage.webp",
+        "type": "Contextual In-Use Field Scene 1:1",
+        "prompt": "Using the attached reference photos, create a realistic photograph of AP Boots AP 2011 Hijau - Sepatu Boot PVC being actively worn on wet agricultural plantation terrain and muddy ground in outdoor daylight. Lower-body framing from knees down, no visible human faces, square 1:1 ratio, photorealistic."
+      }
+    },
+    "photobank_ready": {
+      "category_folder": "07_Classic_Boots",
+      "category_group": "AP Classic Boots",
+      "manifest_file": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\DAFTAR_FOTO_DAN_KATEGORI_PHOTOBANK.csv",
+      "all_4_slots_ready": true
+    }
   }
 }
