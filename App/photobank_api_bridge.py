@@ -92,6 +92,57 @@ def fit_to_studio_canvas(img: Image.Image, target_size=(1000, 1000), fill_ratio=
     return canvas
 
 
+PHOTOROOM_DEFAULT_PRO_KEY = "sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651"
+PHOTOROOM_SANDBOX_KEY = "sandbox_sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651"
+
+def fetch_photoroom_segmented_image(image_path: str, api_key: Optional[str] = None, target_size: int = 1000) -> Optional[Image.Image]:
+    """
+    Call Photoroom Segment API to remove background cleanly and place boot on pure white #FFFFFF.
+    Supports official production key (no watermark) and sandbox key.
+    """
+    key = api_key if api_key and api_key.strip() else PHOTOROOM_DEFAULT_PRO_KEY
+    if not image_path or not os.path.exists(image_path):
+        return None
+    try:
+        headers = {"x-api-key": key}
+        with open(image_path, "rb") as f:
+            files = {"image_file": f}
+            data = {"background_color": "FFFFFF", "format": "png", "crop": "true"}
+            resp = requests.post("https://sdk.photoroom.com/v1/segment", headers=headers, files=files, data=data, timeout=25)
+            if resp.status_code == 200:
+                raw_img = Image.open(io.BytesIO(resp.content)).convert("RGB")
+                return raw_img
+            else:
+                print(f"[Photoroom API Error] Status {resp.status_code}: {resp.text[:120]}")
+    except Exception as e:
+        print(f"[Photoroom Error] {e}")
+    return None
+
+def fetch_colab_ngrok_image(image_path: str, prompt: str, ngrok_url: str, target_size: int = 1000) -> Optional[Image.Image]:
+    """
+    Send raw footwear photo and text prompt to Google Colab Diffusers inpainting server via ngrok tunnel.
+    """
+    if not ngrok_url or not ngrok_url.startswith("http"):
+        return None
+    if not image_path or not os.path.exists(image_path):
+        return None
+    try:
+        url = ngrok_url.rstrip("/")
+        if not url.endswith("/generate-background"):
+            url = f"{url}/generate-background/"
+        with open(image_path, "rb") as f:
+            files = {"file": f}
+            data = {"prompt": prompt}
+            resp = requests.post(url, files=files, data=data, timeout=60)
+            if resp.status_code == 200 and 'image' in resp.headers.get("Content-Type", ""):
+                raw_img = Image.open(io.BytesIO(resp.content)).convert("RGB")
+                return raw_img
+            else:
+                print(f"[Colab ngrok Error] Status {resp.status_code}: {resp.text[:120]}")
+    except Exception as e:
+        print(f"[Colab ngrok Error] {e}")
+    return None
+
 def fetch_ai_generated_image(prompt: str, target_size: int = 1000, model: str = "flux", timeout: int = 40) -> Optional[Image.Image]:
     """
     Generate high-clarity photorealistic e-commerce imagery using real Generative AI Diffusion.
@@ -258,8 +309,9 @@ def generate_product_variations_custom(
     save_to_shopee: bool = True,
     save_to_flow: bool = True,
     save_to_photobank: bool = True,
-    engine: str = "ai_flux",
-    api_key: Optional[str] = None
+    engine: str = "photoroom",
+    api_key: Optional[str] = None,
+    ngrok_url: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Generate customized product image variations with Actual AI Generative Diffusion or Standalone Engine.
@@ -310,11 +362,12 @@ def generate_product_variations_custom(
         
         slot1_prompt = f"commercial studio product photograph of {raw_title}, 3/4 front angle, standing upright, pure seamless white background (RGB 255,255,255), soft studio box lighting, crisp waterproof PVC rubber boot texture, clean sole treads, photorealistic 8k, square 1:1, no watermark, no text"
         gen_img = None
-        if engine == "google_ai_studio" and api_key:
+        if engine == "photoroom":
+            gen_img = fetch_photoroom_segmented_image(hero_src, api_key=api_key, target_size=target_size)
+        elif engine == "colab_diffusers" and ngrok_url:
+            gen_img = fetch_colab_ngrok_image(hero_src, slot1_prompt, ngrok_url, target_size=target_size)
+        elif engine == "google_ai_studio" and api_key:
             gen_img = fetch_google_ai_studio_image(slot1_prompt, api_key, target_size)
-            if not gen_img:
-                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 1...")
-                gen_img = fetch_ai_generated_image(slot1_prompt, target_size)
         elif engine == "ai_flux":
             gen_img = fetch_ai_generated_image(slot1_prompt, target_size)
 
@@ -344,11 +397,13 @@ def generate_product_variations_custom(
         
         slot2_prompt = f"orthogonal 90-degree lateral side profile product photograph of {raw_title}, perfectly level horizontal side angle showing shaft height, ankle contour, and sole profile, seamless pure white background (RGB 255,255,255), studio softbox lighting, square 1:1, crisp detail, no text"
         gen_img2 = None
-        if engine == "google_ai_studio" and api_key:
+        side_source_file = side_src if os.path.exists(side_src) else (hero_src if os.path.exists(hero_src) else None)
+        if engine == "photoroom" and side_source_file:
+            gen_img2 = fetch_photoroom_segmented_image(side_source_file, api_key=api_key, target_size=target_size)
+        elif engine == "colab_diffusers" and ngrok_url and side_source_file:
+            gen_img2 = fetch_colab_ngrok_image(side_source_file, slot2_prompt, ngrok_url, target_size=target_size)
+        elif engine == "google_ai_studio" and api_key:
             gen_img2 = fetch_google_ai_studio_image(slot2_prompt, api_key, target_size)
-            if not gen_img2:
-                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 2...")
-                gen_img2 = fetch_ai_generated_image(slot2_prompt, target_size)
         elif engine == "ai_flux":
             gen_img2 = fetch_ai_generated_image(slot2_prompt, target_size)
 
@@ -423,11 +478,10 @@ def generate_product_variations_custom(
         
         slot4_prompt = f"photorealistic outdoor action photo of {raw_title} waterproof boots being actively worn on wet agricultural plantation muddy ground and damp soil, lower-body framing from knees down, realistic daytime sunlight, puddles and mud on boot lower, photorealistic, square 1:1, no faces"
         gen_img4 = None
-        if engine == "google_ai_studio" and api_key:
+        if engine == "colab_diffusers" and ngrok_url and os.path.exists(hero_src):
+            gen_img4 = fetch_colab_ngrok_image(hero_src, slot4_prompt, ngrok_url, target_size=target_size)
+        elif engine == "google_ai_studio" and api_key:
             gen_img4 = fetch_google_ai_studio_image(slot4_prompt, api_key, target_size)
-            if not gen_img4:
-                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 4...")
-                gen_img4 = fetch_ai_generated_image(slot4_prompt, target_size)
         elif engine == "ai_flux":
             gen_img4 = fetch_ai_generated_image(slot4_prompt, target_size)
 
@@ -524,8 +578,9 @@ def batch_generate_products_custom(
     save_to_shopee: bool = True,
     save_to_flow: bool = True,
     save_to_photobank: bool = True,
-    engine: str = "ai_flux",
-    api_key: Optional[str] = None
+    engine: str = "photoroom",
+    api_key: Optional[str] = None,
+    ngrok_url: Optional[str] = None
 ) -> Dict[str, Any]:
     """Batch generate image variations for multiple selected products."""
     results = []
@@ -547,7 +602,8 @@ def batch_generate_products_custom(
                 save_to_flow=save_to_flow,
                 save_to_photobank=save_to_photobank,
                 engine=engine,
-                api_key=api_key
+                api_key=api_key,
+                ngrok_url=ngrok_url
             )
             if res.get("success"):
                 results.append(res)

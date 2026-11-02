@@ -1488,8 +1488,9 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 save_to_shopee = bool(data.get("save_to_shopee", True))
                 save_to_flow = bool(data.get("save_to_flow", True))
                 save_to_photobank = bool(data.get("save_to_photobank", True))
-                engine = data.get("engine", "ai_flux")
+                engine = data.get("engine", "photoroom")
                 api_key = data.get("api_key", None)
+                ngrok_url = data.get("ngrok_url", None)
                 
                 res = generate_product_variations_custom(
                     sku=sku,
@@ -1501,7 +1502,8 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     save_to_flow=save_to_flow,
                     save_to_photobank=save_to_photobank,
                     engine=engine,
-                    api_key=api_key
+                    api_key=api_key,
+                    ngrok_url=ngrok_url
                 )
                 self.send_json(res)
             except Exception as e:
@@ -1517,8 +1519,9 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                 save_to_shopee = bool(data.get("save_to_shopee", True))
                 save_to_flow = bool(data.get("save_to_flow", True))
                 save_to_photobank = bool(data.get("save_to_photobank", True))
-                engine = data.get("engine", "ai_flux")
+                engine = data.get("engine", "photoroom")
                 api_key = data.get("api_key", None)
+                ngrok_url = data.get("ngrok_url", None)
 
                 res = batch_generate_products_custom(
                     items=items,
@@ -1529,7 +1532,8 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     save_to_flow=save_to_flow,
                     save_to_photobank=save_to_photobank,
                     engine=engine,
-                    api_key=api_key
+                    api_key=api_key,
+                    ngrok_url=ngrok_url
                 )
                 self.send_json(res)
             except Exception as e:

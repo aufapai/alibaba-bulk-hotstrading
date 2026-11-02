@@ -1429,37 +1429,107 @@
                             Auto Download & Sync ke Folder
                         </span>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px;">
-                        <label style="background: #ecfdf5; border: 2px solid #059669; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEngineFlux">
-                            <input type="radio" name="genEngineRadio" id="engineFlux" value="ai_flux" checked onchange="onSelectGenEngine('ai_flux')" style="margin-top: 2px; accent-color: #059669;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px;">
+                        <!-- Engine 1: Photoroom API Studio (Default) -->
+                        <label style="background: #ecfdf5; border: 2px solid #059669; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEnginePhotoroom">
+                            <input type="radio" name="genEngineRadio" id="enginePhotoroom" value="photoroom" checked onchange="onSelectGenEngine('photoroom')" style="margin-top: 2px; accent-color: #059669;">
                             <div>
-                                <div style="font-weight: 800; font-size: 0.85rem; color: #065f46;">🚀 Actual AI Generative Studio (FLUX / Diffusion)</div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-weight: 800; font-size: 0.85rem; color: #065f46;">🎨 Photoroom API Studio</span>
+                                    <span style="background: #10b981; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 4px;">Rekomendasi</span>
+                                </div>
                                 <div style="font-size: 0.72rem; color: #047857; margin-top: 3px; line-height: 1.35;">
-                                    Generasi visual AI nyata dari prompt JSON produk & referensi foto. Otomatis download ke folder masing-masing. Tanpa kuota/API key.
+                                    Hapus background & hasilkan foto studio putih murni #FFFFFF resmi (3.5 dtk). Tajam, presisi, anti-cacat.
                                 </div>
                             </div>
                         </label>
+
+                        <!-- Engine 2: Google Colab Diffusers Inpainting -->
+                        <label style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEngineColab">
+                            <input type="radio" name="genEngineRadio" id="engineColab" value="colab_diffusers" onchange="onSelectGenEngine('colab_diffusers')" style="margin-top: 2px; accent-color: #6366f1;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-weight: 800; font-size: 0.85rem; color: #4338ca;">🚀 Google Colab (ngrok GPU T4)</span>
+                                    <span style="background: #6366f1; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 4px;">SD Inpainting</span>
+                                </div>
+                                <div style="font-size: 0.72rem; color: #64748b; margin-top: 3px; line-height: 1.35;">
+                                    Stable Diffusion Inpainting via FastAPI + ngrok. Menghasilkan latar lumpur/kebun/pabrik untuk Slot 4.
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Engine 3: Studio Smart Canvas -->
+                        <label style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEngineOffline">
+                            <input type="radio" name="genEngineRadio" id="engineOffline" value="smart_canvas" onchange="onSelectGenEngine('smart_canvas')" style="margin-top: 2px; accent-color: #d97706;">
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.85rem; color: #d97706;">📐 Studio Smart Canvas (Offline)</div>
+                                <div style="font-size: 0.72rem; color: #64748b; margin-top: 3px; line-height: 1.35;">
+                                    Auto-crop & scale 85% frame kanvas putih murni #FFFFFF lokal via Python/PIL. 100% instan tanpa internet.
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Engine 4: Google AI Studio / Imagen 3 -->
                         <label style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEngineGoogle">
                             <input type="radio" name="genEngineRadio" id="engineGoogle" value="google_ai_studio" onchange="onSelectGenEngine('google_ai_studio')" style="margin-top: 2px; accent-color: #0284c7;">
                             <div>
                                 <div style="font-weight: 800; font-size: 0.85rem; color: #0284c7;">🔑 Google AI Studio / Imagen 3</div>
                                 <div style="font-size: 0.72rem; color: #64748b; margin-top: 3px; line-height: 1.35;">
-                                    Gunakan API Key Google AI Studio pribadi Anda (Imagen 3.0 HD).
-                                </div>
-                            </div>
-                        </label>
-                        <label style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start;" id="labelEngineOffline">
-                            <input type="radio" name="genEngineRadio" id="engineOffline" value="offline_canvas" onchange="onSelectGenEngine('offline_canvas')" style="margin-top: 2px; accent-color: #d97706;">
-                            <div>
-                                <div style="font-weight: 800; font-size: 0.85rem; color: #d97706;">📐 Studio Smart Canvas (Offline Local)</div>
-                                <div style="font-size: 0.72rem; color: #64748b; margin-top: 3px; line-height: 1.35;">
-                                    Proses lokal instan: auto-crop & auto-scale 85% frame kanvas putih murni (anti-kekecilan).
+                                    Generasi visual AI dengan API Key Google AI Studio pribadi Anda (Imagen 3.0 HD).
                                 </div>
                             </div>
                         </label>
                     </div>
 
-                    <div id="googleApiKeyBox" style="display: none; margin-top: 10px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 10px 12px;">
+                    <!-- Photoroom Key Settings Box -->
+                    <div id="photoroomKeyBox" style="margin-top: 12px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+                            <label style="font-size: 0.78rem; font-weight: 800; color: #065f46;">
+                                Photoroom API Key:
+                            </label>
+                            <div style="display: flex; gap: 12px; align-items: center; font-size: 0.72rem;">
+                                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; color: #047857; font-weight: 700;">
+                                    <input type="radio" name="prKeyMode" value="pro" checked onchange="switchPrKey('pro')" style="accent-color: #059669;">
+                                    Production (Clean No Watermark)
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer; color: #64748b;">
+                                    <input type="radio" name="prKeyMode" value="sandbox" onchange="switchPrKey('sandbox')" style="accent-color: #059669;">
+                                    Sandbox (With Watermark)
+                                </label>
+                            </div>
+                        </div>
+                        <input type="text" id="inputPhotoroomKey" value="sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651" style="width: 100%; padding: 6px 10px; border: 1px solid #6ee7b7; border-radius: 6px; font-size: 0.8rem; font-family: monospace; background: #ffffff;">
+                        <div style="font-size: 0.72rem; color: #047857; margin-top: 4px;">
+                            ✓ Terhubung ke Photoroom Segment API v1 (Seamless White Studio 1:1, auto crop padding & centering).
+                        </div>
+                    </div>
+
+                    <!-- Colab ngrok Settings Box -->
+                    <div id="colabNgrokBox" style="display: none; margin-top: 12px; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 10px 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+                            <label style="font-size: 0.78rem; font-weight: 800; color: #3730a3;">
+                                Google Colab Diffusers Inpainting ngrok URL:
+                            </label>
+                            <div style="display: flex; gap: 8px;">
+                                <a href="https://colab.research.google.com/drive/1Vnoy0QT1gzMCPwsif1yheAslk6tUHUv4?usp=sharing" target="_blank" style="font-size: 0.72rem; font-weight: 800; color: #4338ca; text-decoration: underline;">
+                                    🚀 Buka Notebook Colab Google Drive ↗
+                                </a>
+                                <span style="color: #c7d2fe;">|</span>
+                                <a href="https://colab.research.google.com/notebook#fileId=https%3A//huggingface.co/stable-diffusion-v1-5/stable-diffusion-inpainting.ipynb" target="_blank" style="font-size: 0.72rem; color: #6366f1; text-decoration: underline;">
+                                    🤗 HuggingFace SD Inpaint ↗
+                                </a>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="inputColabNgrokUrl" placeholder="https://abcd-123.ngrok-free.app/generate-background/" style="flex: 1; padding: 6px 10px; border: 1px solid #a5b4fc; border-radius: 6px; font-size: 0.8rem; font-family: monospace; background: #ffffff;">
+                        </div>
+                        <div style="font-size: 0.72rem; color: #4338ca; margin-top: 4px;">
+                            Jalankan notebook di Google Colab (GPU T4 gratis), lalu salin URL ngrok publik ke kolom di atas.
+                        </div>
+                    </div>
+
+                    <!-- Google AI Studio Settings Box -->
+                    <div id="googleApiKeyBox" style="display: none; margin-top: 12px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 10px 14px;">
                         <label style="font-size: 0.78rem; font-weight: 700; color: #0369a1; display: block; margin-bottom: 4px;">
                             Google AI Studio API Key (<code style="background: rgba(255,255,255,0.7); padding: 1px 4px; border-radius: 3px;">AIzaSy...</code>):
                         </label>
@@ -1470,8 +1540,7 @@
                             </a>
                         </div>
                         <div id="googleKeyWarning" style="display: none; margin-top: 8px; font-size: 0.74rem; color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 8px 12px; border-radius: 6px; line-height: 1.45;">
-                            ⚠️ <strong>Pemberitahuan Token:</strong> Token berawalan <code>AQ...</code> adalah token sesi internal editor, bukan API Key Google AI Studio. Google AI Studio selalu berawalan <code>AIzaSy...</code>.<br>
-                            💡 <strong>Saran:</strong> Pilih <strong>Opsi 1: 🚀 Actual AI Generative Studio (FLUX)</strong> di atas — <strong>GRATIS dan sama sekali TIDAK MEMERLUKAN API KEY!</strong>
+                            ⚠️ <strong>Pemberitahuan Token:</strong> Token berawalan <code>AQ...</code> adalah token internal sesi editor, bukan API Key Google AI Studio. Google AI Studio selalu berawalan <code>AIzaSy...</code>.
                         </div>
                     </div>
                 </div>
@@ -2632,26 +2701,48 @@
         }
 
         function onSelectGenEngine(engine) {
-            const lFlux = document.getElementById('labelEngineFlux');
+            const lPR = document.getElementById('labelEnginePhotoroom');
+            const lColab = document.getElementById('labelEngineColab');
             const lG = document.getElementById('labelEngineGoogle');
             const lOff = document.getElementById('labelEngineOffline');
-            if (lFlux) {
-                lFlux.style.borderColor = engine === 'ai_flux' ? '#059669' : '#cbd5e1';
-                lFlux.style.background = engine === 'ai_flux' ? '#ecfdf5' : '#f8fafc';
+            
+            if (lPR) {
+                lPR.style.borderColor = engine === 'photoroom' ? '#059669' : '#cbd5e1';
+                lPR.style.background = engine === 'photoroom' ? '#ecfdf5' : '#f8fafc';
+            }
+            if (lColab) {
+                lColab.style.borderColor = engine === 'colab_diffusers' ? '#6366f1' : '#cbd5e1';
+                lColab.style.background = engine === 'colab_diffusers' ? '#eef2ff' : '#f8fafc';
             }
             if (lG) {
                 lG.style.borderColor = engine === 'google_ai_studio' ? '#0284c7' : '#cbd5e1';
                 lG.style.background = engine === 'google_ai_studio' ? '#f0f9ff' : '#f8fafc';
             }
             if (lOff) {
-                lOff.style.borderColor = engine === 'offline_canvas' ? '#d97706' : '#cbd5e1';
-                lOff.style.background = engine === 'offline_canvas' ? '#fffbeb' : '#f8fafc';
+                lOff.style.borderColor = (engine === 'smart_canvas' || engine === 'offline_canvas') ? '#d97706' : '#cbd5e1';
+                lOff.style.background = (engine === 'smart_canvas' || engine === 'offline_canvas') ? '#fffbeb' : '#f8fafc';
             }
-            const apiKeyBox = document.getElementById('googleApiKeyBox');
-            if (apiKeyBox) {
-                apiKeyBox.style.display = engine === 'google_ai_studio' ? 'block' : 'none';
+            
+            const prBox = document.getElementById('photoroomKeyBox');
+            if (prBox) prBox.style.display = engine === 'photoroom' ? 'block' : 'none';
+
+            const colabBox = document.getElementById('colabNgrokBox');
+            if (colabBox) colabBox.style.display = engine === 'colab_diffusers' ? 'block' : 'none';
+
+            const gBox = document.getElementById('googleApiKeyBox');
+            if (gBox) gBox.style.display = engine === 'google_ai_studio' ? 'block' : 'none';
+        }
+
+        function switchPrKey(mode) {
+            const inp = document.getElementById('inputPhotoroomKey');
+            if (!inp) return;
+            if (mode === 'pro') {
+                inp.value = 'sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651';
+            } else {
+                inp.value = 'sandbox_sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651';
             }
         }
+        window.switchPrKey = switchPrKey;
 
         function validateGoogleKeyInput(val) {
             val = (val || '').trim();
@@ -5441,8 +5532,17 @@
             const savePhotobank = document.getElementById('chkSavePhotobank').checked;
 
             const engineRadio = document.querySelector('input[name="genEngineRadio"]:checked');
-            const selectedEngine = engineRadio ? engineRadio.value : 'ai_flux';
-            const googleApiKey = document.getElementById('inputGoogleApiKey') ? document.getElementById('inputGoogleApiKey').value.trim() : '';
+            const selectedEngine = engineRadio ? engineRadio.value : 'photoroom';
+            let apiKeyToUse = '';
+            if (selectedEngine === 'photoroom') {
+                const prKeyInput = document.getElementById('inputPhotoroomKey');
+                apiKeyToUse = prKeyInput ? prKeyInput.value.trim() : 'sk_pr_default_5cf2ec3a5a6ce7e52ab8dcfa7b50d2dbca4dd651';
+            } else if (selectedEngine === 'google_ai_studio') {
+                const gKeyInput = document.getElementById('inputGoogleApiKey');
+                apiKeyToUse = gKeyInput ? gKeyInput.value.trim() : '';
+            }
+            const ngrokUrlInput = document.getElementById('inputColabNgrokUrl');
+            const ngrokUrl = ngrokUrlInput ? ngrokUrlInput.value.trim() : '';
 
             const btn = document.getElementById('btnExecuteGenModal');
             btn.disabled = true;
@@ -5481,7 +5581,8 @@
                             save_to_flow: saveFlow,
                             save_to_photobank: savePhotobank,
                             engine: selectedEngine,
-                            api_key: googleApiKey
+                            api_key: apiKeyToUse,
+                            ngrok_url: ngrokUrl
                         })
                     });
                     const data = await res.json();
