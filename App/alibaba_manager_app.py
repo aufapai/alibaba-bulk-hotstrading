@@ -47,7 +47,8 @@ from photobank_api_bridge import (
     get_photobank_summary, generate_sample_4_variations,
     generate_product_variations_custom, batch_generate_products_custom,
     upload_sku_slots_to_photobank_admin, PHOTOBANK_DIR,
-    FLOW_PROJECT_ID, FLOW_PROJECT_URL, FLOW_ACCOUNT_EMAIL
+    FLOW_PROJECT_ID, FLOW_PROJECT_URL, FLOW_ACCOUNT_EMAIL,
+    get_flow_10_bundle, create_flow_batch_zip
 )
 
 
@@ -822,6 +823,35 @@ class AlibabaManagerHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_json({"success": True, "message": f"Opened {tpath}"})
                 else:
                     self.send_json({"success": False, "error": "Folder not found"}, status=404)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/flow/bundle-10-products":
+            try:
+                qp = urllib.parse.parse_qs(parsed.query)
+                raw_folders = qp.get("folders", [""])[0]
+                folders_list = [f.strip() for f in raw_folders.split(",") if f.strip()] if raw_folders else None
+                bundle = get_flow_10_bundle(folders=folders_list, max_products=10)
+                self.send_json(bundle)
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+            return
+
+        elif path == "/api/flow/download-zip":
+            try:
+                qp = urllib.parse.parse_qs(parsed.query)
+                raw_folders = qp.get("folders", [""])[0]
+                folders_list = [f.strip() for f in raw_folders.split(",") if f.strip()] if raw_folders else None
+                zip_bytes = create_flow_batch_zip(folders=folders_list, max_products=10)
+                
+                self.send_response(200)
+                self.send_header("Content-Type", "application/zip")
+                self.send_header("Content-Disposition", 'attachment; filename="Flow_10_Products_Assets_HOTS.zip"')
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Content-Length", str(len(zip_bytes)))
+                self.end_headers()
+                self.wfile.write(zip_bytes)
             except Exception as e:
                 self.send_json({"success": False, "error": str(e)}, status=500)
             return

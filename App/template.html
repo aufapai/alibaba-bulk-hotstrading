@@ -1464,10 +1464,14 @@
                             Google AI Studio API Key (<code style="background: rgba(255,255,255,0.7); padding: 1px 4px; border-radius: 3px;">AIzaSy...</code>):
                         </label>
                         <div style="display: flex; gap: 8px;">
-                            <input type="password" id="inputGoogleApiKey" placeholder="Paste AIzaSy... key dari aistudio.google.com/app/apikey" style="flex: 1; padding: 6px 10px; border: 1px solid #7dd3fc; border-radius: 6px; font-size: 0.8rem; font-family: monospace;">
+                            <input type="password" id="inputGoogleApiKey" oninput="validateGoogleKeyInput(this.value)" placeholder="Paste AIzaSy... key dari aistudio.google.com/app/apikey" style="flex: 1; padding: 6px 10px; border: 1px solid #7dd3fc; border-radius: 6px; font-size: 0.8rem; font-family: monospace;">
                             <a href="https://aistudio.google.com/app/apikey" target="_blank" style="padding: 6px 12px; background: #0284c7; color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-decoration: none; display: flex; align-items: center;">
                                 Dapatkan Key Gratis ↗
                             </a>
+                        </div>
+                        <div id="googleKeyWarning" style="display: none; margin-top: 8px; font-size: 0.74rem; color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 8px 12px; border-radius: 6px; line-height: 1.45;">
+                            ⚠️ <strong>Pemberitahuan Token:</strong> Token berawalan <code>AQ...</code> adalah token sesi internal editor, bukan API Key Google AI Studio. Google AI Studio selalu berawalan <code>AIzaSy...</code>.<br>
+                            💡 <strong>Saran:</strong> Pilih <strong>Opsi 1: 🚀 Actual AI Generative Studio (FLUX)</strong> di atas — <strong>GRATIS dan sama sekali TIDAK MEMERLUKAN API KEY!</strong>
                         </div>
                     </div>
                 </div>
@@ -1776,6 +1780,111 @@
                         <span style="font-size: 0.7rem; color: #94a3b8;" id="flowApiStatus">Idle</span>
                     </div>
                     <pre id="flowApiLogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Ready for testing sample generation or upload API.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 11: GOOGLE FLOW 10-PRODUCT BATCH STUDIO (ALWAYS-APPROVE) -->
+    <div class="modal-overlay" id="flow10BatchModal">
+        <div class="modal-content" style="max-width: 1180px; max-height: 94vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #1e1b4b, #312e81, #4338ca); color: #ffffff; padding: 1.1rem 1.5rem; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 1.6rem;">⚡</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin: 0;">
+                            Google Flow 10-Product Batch Studio & Agent Prompting
+                        </h3>
+                        <span class="badge" style="background: #10b981; color: #ffffff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; font-weight: 800;">
+                            ALWAYS-APPROVE MODE
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #c7d2fe; margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span>🎯 Kuota Batch: <strong style="color: #fff;" id="flow10CountBadge">10 Produk (40 Foto WebP)</strong></span>
+                        <span>📦 Project: <a href="https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c" target="_blank" style="color: #93c5fd; text-decoration: underline;">5a88c3fd-477c-4eed-a126-f812ccfb079c (aufahots@gmail.com)</a></span>
+                        <span>⚡ Mode: <strong>Otomatis Tanpa Konfirmasi Berulang</strong></span>
+                    </div>
+                </div>
+                <button class="btn-close" style="color: #fff; opacity: 0.85;" onclick="closeModal('flow10BatchModal')">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; background: #f8fafc; flex: 1;">
+                <!-- Main Action Controls -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #ffffff; padding: 14px 18px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" id="btnCopyFlow10Agent" onclick="copyFlow10AgentPrompt()" style="background: linear-gradient(135deg, #4f46e5, #4338ca); color: #fff; font-weight: 800; border-radius: 8px; padding: 9px 16px; box-shadow: 0 3px 8px rgba(79, 70, 229, 0.35);">
+                            📋 Salin Agent Prompt + Coupled JSON
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #ecfdf5; border: 1.5px solid #10b981; color: #065f46; font-weight: 800; border-radius: 8px; padding: 9px 16px;">
+                            🎨 Buka Google Flow Project ↗
+                        </button>
+                        <button type="button" class="btn btn-sm" id="btnRunFlow10Local" onclick="executeFlow10BatchLocal()" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; border-radius: 8px; padding: 9px 16px; box-shadow: 0 3px 8px rgba(5, 150, 105, 0.35);">
+                            ⚡ Generate Otomatis (Always Approve)
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-sm" onclick="downloadFlow10Zip()" style="background: #fff7ed; border: 1.5px solid #ea580c; color: #c2410c; font-weight: 800; border-radius: 8px; padding: 9px 16px;" title="Unduh arsip ZIP 10 produk lengkap dengan 40 foto dan JSON">
+                            📦 Download ZIP (40 Foto + JSON)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress & Terminal Box -->
+                <div style="background: #0f172a; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.78rem; font-weight: 800; color: #38bdf8;">📡 Status & Realtime Batch Terminal:</span>
+                        <span style="font-size: 0.72rem; color: #94a3b8;" id="flow10StatusText">Siap Memproses</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-bottom: 8px;">
+                        <div id="flow10ProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #6366f1, #10b981); transition: width 0.3s ease;"></div>
+                    </div>
+                    <pre id="flow10LogBox" style="margin: 0; color: #a5f3fc; font-family: monospace; font-size: 0.74rem; max-height: 110px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">Pilih produk lalu klik 'Salin Agent Prompt' untuk Flow atau 'Generate Otomatis' untuk render langsung.</pre>
+                </div>
+
+                <!-- Tabs: Product List vs Coupled JSON vs Agent Master Prompt -->
+                <div style="display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 8px;">
+                    <button type="button" class="btn btn-sm active" id="tabBtnFlow10List" onclick="switchFlow10Tab('list')" style="font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 6px; background: #e0e7ff; color: #3730a3;">
+                        📦 Daftar 10 Produk
+                    </button>
+                    <button type="button" class="btn btn-sm" id="tabBtnFlow10Prompt" onclick="switchFlow10Tab('prompt')" style="font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 6px; background: #f1f5f9; color: #475569;">
+                        🤖 Agent Master Prompt
+                    </button>
+                    <button type="button" class="btn btn-sm" id="tabBtnFlow10Json" onclick="switchFlow10Tab('json')" style="font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 6px; background: #f1f5f9; color: #475569;">
+                        📄 Coupled JSON Bundle
+                    </button>
+                </div>
+
+                <!-- Tab 1: Product List Grid -->
+                <div id="flow10TabContentList">
+                    <div id="flow10ProductsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px;">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- Tab 2: Agent Master Prompt View -->
+                <div id="flow10TabContentPrompt" style="display: none;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 0.8rem; font-weight: 800; color: #3730a3;">Prompt Siap Paste ke Google Flow Agent:</span>
+                            <button type="button" class="btn btn-sm" onclick="copyFlow10AgentPrompt()" style="background: #4338ca; color: #fff; font-size: 0.74rem; font-weight: 700; padding: 4px 10px; border-radius: 6px;">
+                                📋 Salin Teks
+                            </button>
+                        </div>
+                        <textarea id="flow10PromptViewer" readonly style="width: 100%; height: 260px; font-family: monospace; font-size: 0.76rem; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; background: #f8fafc; color: #1e293b; line-height: 1.4; resize: vertical;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Coupled JSON View -->
+                <div id="flow10TabContentJson" style="display: none;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 0.8rem; font-weight: 800; color: #047857;">Data Array Coupled JSON (10 Produk):</span>
+                            <button type="button" class="btn btn-sm" onclick="copyFlow10JsonOnly()" style="background: #047857; color: #fff; font-size: 0.74rem; font-weight: 700; padding: 4px 10px; border-radius: 6px;">
+                                📋 Salin JSON Saja
+                            </button>
+                        </div>
+                        <textarea id="flow10JsonViewer" readonly style="width: 100%; height: 260px; font-family: monospace; font-size: 0.76rem; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; background: #f8fafc; color: #1e293b; line-height: 1.4; resize: vertical;"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2541,6 +2650,17 @@
             const apiKeyBox = document.getElementById('googleApiKeyBox');
             if (apiKeyBox) {
                 apiKeyBox.style.display = engine === 'google_ai_studio' ? 'block' : 'none';
+            }
+        }
+
+        function validateGoogleKeyInput(val) {
+            val = (val || '').trim();
+            const warn = document.getElementById('googleKeyWarning');
+            if (!warn) return;
+            if (val.startsWith('AQ.')) {
+                warn.style.display = 'block';
+            } else {
+                warn.style.display = 'none';
             }
         }
 
@@ -3919,10 +4039,25 @@
         }
 
         function showToast(msg) {
-            const t = document.getElementById('toastBox');
-            document.getElementById('toastMsg').innerText = msg;
+            let t = document.getElementById('toastBox');
+            let m = document.getElementById('toastMsg');
+            if (!t) {
+                t = document.createElement('div');
+                t.id = 'toastBox';
+                t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#0f172a;color:#ffffff;padding:12px 20px;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.3);z-index:999999;display:flex;align-items:center;gap:10px;font-size:0.85rem;font-weight:700;border:1px solid #334155;transition:opacity 0.3s ease;';
+                m = document.createElement('span');
+                m.id = 'toastMsg';
+                t.appendChild(m);
+                document.body.appendChild(t);
+            }
+            if (m) m.innerText = msg;
             t.style.display = 'flex';
-            setTimeout(() => { t.style.display = 'none'; }, 4000);
+            t.style.opacity = '1';
+            clearTimeout(window.__toastTimeout);
+            window.__toastTimeout = setTimeout(() => {
+                t.style.opacity = '0';
+                setTimeout(() => { if (t) t.style.display = 'none'; }, 300);
+            }, 4000);
         }
 
         // ==========================================
@@ -4510,6 +4645,9 @@
                             <span style="font-size: 0.85rem; color: #64748b;">
                                 Terpilih: <strong id="shopeeSelCount" style="color: #ea580c; font-size: 1.05rem; font-weight: 800;">${selectedShopeeFolders.size}</strong> produk
                             </span>
+                            <button type="button" class="btn btn-sm" onclick="selectTop10ShopeeProducts()" style="background: #eef2ff; border: 1.5px solid #6366f1; color: #4338ca; font-size: 0.75rem; padding: 5px 12px; border-radius: 6px; font-weight: 800;">
+                                ⭐ Pilih 10 Teratas
+                            </button>
                             <button type="button" class="btn btn-sm" onclick="selectAllShopeeProducts()" style="background: #fff7ed; border: 1px solid #fdba74; color: #c2410c; font-size: 0.75rem; padding: 5px 12px; border-radius: 6px; font-weight: 700;">
                                 Pilih Semua (${totalCount})
                             </button>
@@ -4517,9 +4655,15 @@
                                 Batalkan Pilihan
                             </button>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <button type="button" class="btn btn-sm" onclick="openPhotobankGenModalForSelected()" id="btnGenShopeeSelected" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 0.84rem; border-radius: 8px; padding: 8px 18px; box-shadow: 0 3px 8px rgba(5, 150, 105, 0.35); cursor: pointer;">
-                                ⚡ Buat Image Generation (${selectedShopeeFolders.size > 0 ? selectedShopeeFolders.size + ' Terpilih' : 'Pilih Produk'})
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-sm" onclick="openFlow10BatchModal()" style="background: linear-gradient(135deg, #312e81, #4338ca); color: #fff; font-weight: 800; font-size: 0.84rem; border-radius: 8px; padding: 8px 16px; box-shadow: 0 3px 8px rgba(49, 46, 129, 0.35); cursor: pointer;" title="Buka Batch 10 Produk untuk Google Flow Agent (Always Approve)">
+                                🚀 Flow 10-Produk Batch
+                            </button>
+                            <button type="button" class="btn btn-sm" onclick="openPhotobankGenModalForSelected()" id="btnGenShopeeSelected" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 0.84rem; border-radius: 8px; padding: 8px 16px; box-shadow: 0 3px 8px rgba(5, 150, 105, 0.35); cursor: pointer;">
+                                ⚡ Buat Image Gen (${selectedShopeeFolders.size > 0 ? selectedShopeeFolders.size + ' Terpilih' : 'Pilih Produk'})
+                            </button>
+                            <button type="button" class="btn btn-sm" onclick="window.open('https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c', '_blank')" style="background: #0284c7; color: #fff; font-weight: 700; font-size: 0.84rem; border-radius: 8px; padding: 8px 14px; cursor: pointer; box-shadow: 0 3px 8px rgba(2, 132, 199, 0.35);" title="Buka Google Flow Project Resmi (aufahots@gmail.com)">
+                                🎨 Flow Project ↗
                             </button>
                         </div>
                     </div>
@@ -4797,6 +4941,247 @@
             a.click();
             URL.revokeObjectURL(url);
             showToast('💾 Mengunduh file JSON...');
+        }
+
+        // ==========================================
+        // GOOGLE FLOW 10-PRODUCT BATCH AGENT STUDIO
+        // ==========================================
+        let currentFlow10BundleData = null;
+
+        function selectTop10ShopeeProducts() {
+            selectedShopeeFolders.clear();
+            const filtered = getFilteredShopeeProducts();
+            const top10 = filtered.slice(0, 10);
+            top10.forEach(p => {
+                selectedShopeeFolders.add(p.folder_name);
+            });
+            renderShopeeStudio();
+            showToast(`⭐ ${top10.length} Produk Teratas Berhasil Dipilih!`);
+        }
+
+        async function openFlow10BatchModal() {
+            let foldersToRequest = Array.from(selectedShopeeFolders);
+            if (foldersToRequest.length === 0) {
+                // If none selected, take top 10
+                const filtered = getFilteredShopeeProducts();
+                foldersToRequest = filtered.slice(0, 10).map(p => p.folder_name);
+                foldersToRequest.forEach(f => selectedShopeeFolders.add(f));
+                renderShopeeStudio();
+            }
+
+            const modal = document.getElementById('flow10BatchModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.add('active');
+            }
+
+            const container = document.getElementById('flow10ProductsContainer');
+            container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #64748b; font-weight: 700;">⏳ Memuat Coupled Data 10 Produk & Agent Master Prompt...</div>';
+            document.getElementById('flow10StatusText').innerText = 'Memuat Data...';
+            document.getElementById('flow10ProgressBar').style.width = '15%';
+
+            try {
+                const foldersParam = encodeURIComponent(foldersToRequest.slice(0, 10).join(','));
+                const res = await fetch(`/api/flow/bundle-10-products?folders=${foldersParam}`);
+                const data = await res.json();
+                if (data.success) {
+                    currentFlow10BundleData = data;
+                    renderFlow10ModalContent(data);
+                    document.getElementById('flow10StatusText').innerText = `Siap! (${data.total_products} Produk Terhubung)`;
+                    document.getElementById('flow10ProgressBar').style.width = '100%';
+                    document.getElementById('flow10CountBadge').innerText = `${data.total_products} Produk (${data.total_products * 4} Foto WebP)`;
+                } else {
+                    container.innerHTML = `<div style="padding: 2rem; color: #ef4444; font-weight: 700;">❌ Gagal: ${data.error}</div>`;
+                }
+            } catch (err) {
+                container.innerHTML = `<div style="padding: 2rem; color: #ef4444; font-weight: 700;">❌ Network Error: ${err}</div>`;
+            }
+        }
+
+        function renderFlow10ModalContent(bundle) {
+            const container = document.getElementById('flow10ProductsContainer');
+            let html = '';
+
+            bundle.coupled_products.forEach((p, idx) => {
+                const t = Date.now();
+                const heroSrc = `/shopee-assets/${encodeURIComponent(p.folder_name)}/${encodeURIComponent(p.target_filenames.slot_1_hero)}?t=${t}`;
+                const sideSrc = `/shopee-assets/${encodeURIComponent(p.folder_name)}/${encodeURIComponent(p.target_filenames.slot_2_side)}?t=${t}`;
+                const treadSrc = `/shopee-assets/${encodeURIComponent(p.folder_name)}/${encodeURIComponent(p.target_filenames.slot_3_tread)}?t=${t}`;
+                const usageSrc = `/shopee-assets/${encodeURIComponent(p.folder_name)}/${encodeURIComponent(p.target_filenames.slot_4_usage)}?t=${t}`;
+
+                html += `
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                            <span style="font-size: 0.72rem; font-weight: 800; color: #4338ca; background: #e0e7ff; padding: 2px 6px; border-radius: 4px;">#${idx+1} [${p.sku}]</span>
+                            <span style="font-size: 0.7rem; color: #64748b;">Rp ${p.price_idr}</span>
+                        </div>
+                        <h5 style="font-size: 0.8rem; font-weight: 800; color: #0f172a; margin: 0 0 8px 0; line-height: 1.3;" title="${p.product_name}">
+                            ${p.product_name.length > 38 ? p.product_name.substring(0, 38) + '...' : p.product_name}
+                        </h5>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 8px;">
+                            <div style="text-align: center;">
+                                <img src="${heroSrc}" onerror="this.src='/shopee-assets/${encodeURIComponent(p.folder_name)}/hero_${encodeURIComponent(p.folder_name)}.webp'" style="width: 100%; aspect-ratio: 1; object-fit: contain; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                <span style="font-size: 0.62rem; color: ${p.status.hero_exists ? '#059669' : '#94a3b8'}; font-weight: 700;">Hero</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <img src="${sideSrc}" onerror="this.src='/shopee-assets/${encodeURIComponent(p.folder_name)}/side_${encodeURIComponent(p.folder_name)}.webp'" style="width: 100%; aspect-ratio: 1; object-fit: contain; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                <span style="font-size: 0.62rem; color: ${p.status.side_exists ? '#0284c7' : '#94a3b8'}; font-weight: 700;">Side</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <img src="${treadSrc}" onerror="this.src='/shopee-assets/${encodeURIComponent(p.folder_name)}/tread_${encodeURIComponent(p.folder_name)}.webp'" style="width: 100%; aspect-ratio: 1; object-fit: contain; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                <span style="font-size: 0.62rem; color: ${p.status.tread_exists ? '#d97706' : '#94a3b8'}; font-weight: 700;">Tread</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <img src="${usageSrc}" onerror="this.src='/shopee-assets/${encodeURIComponent(p.folder_name)}/usage_${encodeURIComponent(p.folder_name)}.webp'" style="width: 100%; aspect-ratio: 1; object-fit: contain; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                <span style="font-size: 0.62rem; color: ${p.status.usage_exists ? '#7c3aed' : '#94a3b8'}; font-weight: 700;">Usage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 6px;">
+                        <span style="font-size: 0.65rem; color: #64748b; font-family: monospace;">${p.folder_name.substring(0, 20)}...</span>
+                        <button type="button" class="btn btn-sm" onclick="copyFlowProductJson('${p.folder_name}')" style="font-size: 0.68rem; padding: 2px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px;">
+                            📋 JSON
+                        </button>
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('flow10PromptViewer').value = bundle.agent_prompt;
+            document.getElementById('flow10JsonViewer').value = JSON.stringify(bundle.coupled_products, null, 2);
+        }
+
+        function switchFlow10Tab(tab) {
+            document.getElementById('flow10TabContentList').style.display = (tab === 'list') ? 'block' : 'none';
+            document.getElementById('flow10TabContentPrompt').style.display = (tab === 'prompt') ? 'block' : 'none';
+            document.getElementById('flow10TabContentJson').style.display = (tab === 'json') ? 'block' : 'none';
+
+            const bList = document.getElementById('tabBtnFlow10List');
+            const bPrompt = document.getElementById('tabBtnFlow10Prompt');
+            const bJson = document.getElementById('tabBtnFlow10Json');
+
+            [bList, bPrompt, bJson].forEach(b => {
+                b.style.background = '#f1f5f9';
+                b.style.color = '#475569';
+            });
+
+            if (tab === 'list') {
+                bList.style.background = '#e0e7ff';
+                bList.style.color = '#3730a3';
+            } else if (tab === 'prompt') {
+                bPrompt.style.background = '#e0e7ff';
+                bPrompt.style.color = '#3730a3';
+            } else if (tab === 'json') {
+                bJson.style.background = '#e0e7ff';
+                bJson.style.color = '#3730a3';
+            }
+        }
+
+        function copyFlow10AgentPrompt() {
+            if (!currentFlow10BundleData) return;
+            navigator.clipboard.writeText(currentFlow10BundleData.agent_prompt).then(() => {
+                showToast('📋 Berhasil menyalin Agent Master Prompt + 10 Produk Coupled JSON! Siap dimasukkan ke Google Flow.');
+            }).catch(e => {
+                showToast('❌ Gagal menyalin: ' + e);
+            });
+        }
+
+        function copyFlow10JsonOnly() {
+            if (!currentFlow10BundleData) return;
+            navigator.clipboard.writeText(JSON.stringify(currentFlow10BundleData.coupled_products, null, 2)).then(() => {
+                showToast('📋 Array Coupled JSON 10 Produk berhasil disalin!');
+            }).catch(e => {
+                showToast('❌ Gagal menyalin JSON: ' + e);
+            });
+        }
+
+        function downloadFlow10Zip() {
+            let folders = [];
+            if (currentFlow10BundleData && currentFlow10BundleData.coupled_products) {
+                folders = currentFlow10BundleData.coupled_products.map(p => p.folder_name);
+            } else {
+                folders = Array.from(selectedShopeeFolders).slice(0, 10);
+            }
+            const query = folders.length > 0 ? `?folders=${encodeURIComponent(folders.join(','))}` : '';
+            showToast('📦 Sedang menyiapkan paket ZIP 10 produk...');
+            window.open(`/api/flow/download-zip${query}`, '_blank');
+        }
+
+        async function executeFlow10BatchLocal() {
+            if (!currentFlow10BundleData || !currentFlow10BundleData.coupled_products) {
+                alert('Tidak ada data produk yang siap digenerate.');
+                return;
+            }
+
+            const items = currentFlow10BundleData.coupled_products.map(p => ({
+                sku: p.sku,
+                folder: p.folder_name
+            }));
+
+            const btn = document.getElementById('btnRunFlow10Local');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Menjalankan Always-Approve Batch...';
+
+            const logBox = document.getElementById('flow10LogBox');
+            const pBar = document.getElementById('flow10ProgressBar');
+            const statusLbl = document.getElementById('flow10StatusText');
+
+            logBox.innerText = `Memulai ALWAYS-APPROVE BATCH GENERATION untuk ${items.length} produk...\nTarget: 4 Slot x ${items.length} = ${items.length * 4} Gambar 1000x1000\n`;
+            
+            let completed = 0;
+            const total = items.length;
+
+            for (let i = 0; i < total; i++) {
+                const item = items[i];
+                const pct = Math.round(((i + 1) / total) * 100);
+                pBar.style.width = `${pct}%`;
+                statusLbl.innerText = `Memproses ${i+1}/${total}: ${item.sku}...`;
+                logBox.innerText += `\n[${i+1}/${total}] Memproses ${item.sku} (${item.folder})...\n`;
+                logBox.scrollTop = logBox.scrollHeight;
+
+                try {
+                    const res = await fetch('/api/photobank/custom-generate', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            sku: item.sku,
+                            folder: item.folder,
+                            slots: [1, 2, 3, 4],
+                            target_size: 1000,
+                            fill_ratio: 0.85,
+                            save_to_shopee: true,
+                            save_to_flow: true,
+                            save_to_photobank: true,
+                            engine: 'ai_flux'
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        completed++;
+                        logBox.innerText += `  ✓ Sukses 4 Slot Foto dibuat untuk ${item.sku}!\n`;
+                    } else {
+                        logBox.innerText += `  ❌ Gagal: ${data.error}\n`;
+                    }
+                } catch (e) {
+                    logBox.innerText += `  ❌ Network Error: ${e}\n`;
+                }
+                logBox.scrollTop = logBox.scrollHeight;
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '⚡ Mulai Batch Ulang (Always Approve)';
+            pBar.style.width = '100%';
+            statusLbl.innerText = `Selesai! (${completed}/${total} Berhasil)`;
+            logBox.innerText += `\n=======================================================\n🎉 BATCH SELESAI! ${completed} dari ${total} produk berhasil digenerate sempurna!\n`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            showToast(`✓ Sukses membuat 40 foto untuk ${completed} produk!`);
+            setTimeout(() => {
+                openFlow10BatchModal();
+                loadShopeeStudioView();
+            }, 600);
         }
 
         async function downloadSingleShopeeAsset(folder) {

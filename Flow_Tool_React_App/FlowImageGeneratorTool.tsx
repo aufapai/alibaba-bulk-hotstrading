@@ -275,7 +275,7 @@ export const FlowImageGeneratorTool: React.FC = () => {
     try {
       // Send Slot 1 Hero
       const slot1 = slotsState[0];
-      if (slot1.dataUrl) {
+      if (slot1 && slot1.dataUrl) {
         await fetch('http://localhost:8888/api/shopee/upload-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -288,7 +288,7 @@ export const FlowImageGeneratorTool: React.FC = () => {
       }
       // Send Slot 2 Side
       const slot2 = slotsState[1];
-      if (slot2.dataUrl) {
+      if (slot2 && slot2.dataUrl) {
         await fetch('http://localhost:8888/api/shopee/upload-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -299,8 +299,34 @@ export const FlowImageGeneratorTool: React.FC = () => {
           })
         });
       }
-      addLog('✓ Sync to local Alibaba Manager completed successfully!');
-      alert('Berhasil sinkronisasi langsung ke localhost:8888!');
+      // Send Slot 3 Tread
+      const slot3 = slotsState[2];
+      if (slot3 && slot3.dataUrl) {
+        await fetch('http://localhost:8888/api/shopee/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            folder_name: folder,
+            target_type: 'tread',
+            image_data: slot3.dataUrl
+          })
+        });
+      }
+      // Send Slot 4 Usage
+      const slot4 = slotsState[3];
+      if (slot4 && slot4.dataUrl) {
+        await fetch('http://localhost:8888/api/shopee/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            folder_name: folder,
+            target_type: 'usage',
+            image_data: slot4.dataUrl
+          })
+        });
+      }
+      addLog('✓ Sync to local Alibaba Manager completed successfully for all generated slots!');
+      alert('Berhasil sinkronisasi langsung ke localhost:8888 untuk semua slot variasi!');
     } catch (e: any) {
       addLog(`Local sync notice: ${e.message} (Make sure start_alibaba_manager.bat is running on localhost:8888)`);
     }

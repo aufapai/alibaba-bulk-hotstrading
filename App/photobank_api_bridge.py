@@ -15,6 +15,7 @@ import io
 import base64
 import urllib.parse
 import shutil
+import zipfile
 from typing import Dict, Any, List, Optional
 from PIL import Image, ImageOps, ImageFilter
 import requests
@@ -847,6 +848,144 @@ def upload_sku_slots_to_photobank_admin(
         "category_group": target_group,
         "results": upload_results
     }
+
+def get_flow_10_bundle(folders: Optional[List[str]] = None, max_products: int = 10) -> Dict[str, Any]:
+    """
+    Constructs a coupled 10-product JSON bundle and Master Agent Prompt for Google Flow
+    Target URL: https://flow.google.com/project/5a88c3fd-477c-4eed-a126-f812ccfb079c
+    Account: aufahots@gmail.com
+    Mode: ALWAYS_APPROVE
+    """
+    from shopee_asset_manager import get_all_shopee_products_status
+    
+    all_status = get_all_shopee_products_status()
+    selected_prods = []
+    
+    if folders and len(folders) > 0:
+        folder_set = set(folders[:max_products])
+        selected_prods = [p for p in all_status if p['folder_name'] in folder_set][:max_products]
+    else:
+        selected_prods = all_status[:max_products]
+        
+    coupled_products = []
+    for p in selected_prods:
+        f_name = p['folder_name']
+        sku = p.get('sku', 'SHP')
+        prod_title = p.get('product_name', f_name.replace('_', ' '))
+        folder_dir = os.path.join(SHOPEE_ASSETS_DIR, f_name)
+        json_file = os.path.join(folder_dir, f"{f_name}.json")
+        
+        prod_json = {}
+        if os.path.exists(json_file):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as jf:
+                    prod_json = json.load(jf)
+            except Exception:
+                pass
+                
+        # Prompts for 4 slots
+        p1 = f"Commercial studio product photograph of {prod_title}. Front 3/4 angle, standing upright, centered, occupying 85% frame. Seamless pure white background (#FFFFFF / RGB 255,255,255), soft even studio lighting, crisp waterproof PVC rubber boot texture, clean sole treads, photorealistic 8k, square 1:1, no watermark, no text."
+        p2 = f"Clean e-commerce commercial product photograph of {prod_title} from a straight orthogonal 90-degree lateral side profile view. Highlighting boot shaft height, waterproof seamless contour, and sole thickness. Seamless pure white background (#FFFFFF / RGB 255,255,255), square 1:1 ratio, no text."
+        p3 = f"High-definition commercial product photo of {prod_title} showcasing the bottom outsole tread pattern and anti-slip traction lugs. Pure white background (#FFFFFF), square 1:1 ratio, sharp macro focus, no text."
+        p4 = f"Realistic contextual photograph of {prod_title} being actively worn on wet agricultural plantation terrain and muddy ground in outdoor daylight. Lower-body framing from knees down, no visible human faces, square 1:1 ratio, photorealistic."
+        
+        hero_file = f"hero_{f_name}.webp"
+        side_file = f"side_{f_name}.webp"
+        tread_file = f"tread_{f_name}.webp"
+        usage_file = f"usage_{f_name}.webp"
+        
+        coupled_products.append({
+            "sku": sku,
+            "product_name": prod_title,
+            "folder_name": f_name,
+            "brand": p.get('brand', 'AP Boots'),
+            "price_idr": p.get('price_idr', '73.900'),
+            "category": prod_json.get('technical_specifications', {}).get('category_classification', 'Industrial Rubber Boots'),
+            "target_filenames": {
+                "slot_1_hero": hero_file,
+                "slot_2_side": side_file,
+                "slot_3_tread": tread_file,
+                "slot_4_usage": usage_file
+            },
+            "slot_prompts": {
+                "slot_1_hero": p1,
+                "slot_2_side": p2,
+                "slot_3_tread": p3,
+                "slot_4_usage": p4
+            },
+            "status": {
+                "hero_exists": os.path.exists(os.path.join(folder_dir, hero_file)),
+                "side_exists": os.path.exists(os.path.join(folder_dir, side_file)),
+                "tread_exists": os.path.exists(os.path.join(folder_dir, tread_file)),
+                "usage_exists": os.path.exists(os.path.join(folder_dir, usage_file)),
+                "json_exists": os.path.exists(json_file)
+            }
+        })
+        
+    # Generate Google Flow Master Agent Prompt
+    agent_prompt = f"""[GOOGLE FLOW AGENT MASTER PROMPT - ALWAYS-APPROVE BATCH MODE]
+Target Project: https://flow.google.com/project/{FLOW_PROJECT_ID}
+Target Account: aufahots@gmail.com
+Execution Policy: ALWAYS_APPROVE (Autonomous sequential generation without manual confirm prompts)
+Total Products: {len(coupled_products)} Products (4 Slots per Product = {len(coupled_products)*4} Output Images)
+
+ROLE & OBJECTIVE:
+You are the Autonomous E-Commerce Visual Production Agent for PT Indo Sukses Semesta / PT Waru Gunung (HOTS Trading).
+Your task is to generate 4 photorealistic square (1:1, 1000x1000) e-commerce product photos for each product in the coupled JSON list below.
+
+SLOT SPECIFICATIONS:
+1. Slot 1 (hero_[folder].webp): Front 3/4 perspective studio hero shot on seamless pure white (#FFFFFF / RGB 255,255,255).
+2. Slot 2 (side_[folder].webp): Orthogonal 90° lateral side profile showcasing shaft height, vamp curvature, and sole thickness on pure white (#FFFFFF).
+3. Slot 3 (tread_[folder].webp): Macro bottom outsole tread detailing traction cleats, lug patterns, and mud channels on pure white (#FFFFFF).
+4. Slot 4 (usage_[folder].webp): Realistic contextual in-use photo on wet outdoor agricultural plantation / industrial muddy ground (knees down, no faces).
+
+DOWNLOAD CONVENTION:
+Save/download each file strictly according to the 'target_filenames' specified in the coupled JSON.
+
+COUPLED 10-PRODUCT DATA JSON:
+{json.dumps(coupled_products, indent=2, ensure_ascii=False)}
+"""
+
+    return {
+        "success": True,
+        "total_products": len(coupled_products),
+        "target_flow_url": f"https://flow.google.com/project/{FLOW_PROJECT_ID}",
+        "account_email": "aufahots@gmail.com",
+        "agent_prompt": agent_prompt,
+        "coupled_products": coupled_products
+    }
+
+def create_flow_batch_zip(folders: Optional[List[str]] = None, max_products: int = 10) -> bytes:
+    """
+    Creates an in-memory ZIP package containing all 4 slot WebP images + JSON metadata
+    for up to 10 selected products, arranged neatly by folder.
+    """
+    from shopee_asset_manager import get_all_shopee_products_status
+    all_status = get_all_shopee_products_status()
+    
+    if folders and len(folders) > 0:
+        folder_set = set(folders[:max_products])
+        selected_prods = [p for p in all_status if p['folder_name'] in folder_set][:max_products]
+    else:
+        selected_prods = all_status[:max_products]
+        
+    mem_zip = io.BytesIO()
+    with zipfile.ZipFile(mem_zip, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for p in selected_prods:
+            f_name = p['folder_name']
+            folder_dir = os.path.join(SHOPEE_ASSETS_DIR, f_name)
+            if not os.path.exists(folder_dir):
+                continue
+                
+            # Add images and json
+            for item in os.listdir(folder_dir):
+                if item.lower().endswith(('.webp', '.json', '.jpg', '.png')):
+                    file_path = os.path.join(folder_dir, item)
+                    arcname = f"{f_name}/{item}"
+                    zf.write(file_path, arcname=arcname)
+                    
+    mem_zip.seek(0)
+    return mem_zip.getvalue()
 
 if __name__ == "__main__":
     print("Testing Photobank API Bridge & Sample 4-Variation Generation...")
