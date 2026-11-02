@@ -6389,33 +6389,10 @@
 
             showToast(`✓ Sukses membuat variasi foto untuk ${successCount} produk!`);
             if (activeSource === 'shopee_studio') {
-                loadShopeeStudioView();
+                setTimeout(() => {
+                    loadShopeeStudioView();
+                }, 500);
             }
-                            logBox.innerText += `    - Slot ${v.slot} (${v.type}): ${v.filename}\n`;
-                        }
-                    } else {
-                        logBox.innerText += `  ❌ Gagal: ${data.error}\n`;
-                    }
-                } catch (err) {
-                    logBox.innerText += `  ❌ Network Error: ${err}\n`;
-                }
-                logBox.scrollTop = logBox.scrollHeight;
-            }
-
-            pBar.style.width = '100%';
-            statusLbl.innerText = `Selesai! (${successCount}/${total} Berhasil)`;
-            logBox.innerText += `\n=======================================================\n🎉 SELESAI! ${successCount} dari ${total} produk berhasil digenerate sempurna!\n`;
-            logBox.scrollTop = logBox.scrollHeight;
-
-            btn.disabled = false;
-            btn.innerHTML = '⚡ Mulai Generate Foto Baru';
-
-            showToast(`✓ Sukses membuat variasi foto untuk ${successCount} produk!`);
-            
-            // Refresh shopee studio view so new images reflect
-            setTimeout(() => {
-                loadShopeeStudioView();
-            }, 800);
         }
 
         // Google Flow & Photobank Admin Studio Logic
