@@ -1,0 +1,137 @@
+[
+  {
+    "sku": "SHP-001",
+    "folder": "AP_Boots_XTR_Hitam_Sepatu_Boot_PVC",
+    "name": "AP Boots XTR Hitam - Sepatu Boot PVC",
+    "duration_sec": 5.35,
+    "success": true,
+    "slots": [
+      {
+        "slot": 1,
+        "type": "hero_white_bg",
+        "filename": "SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_1_hero.webp",
+        "dimension": "1000x1000",
+        "size_kb": 22.9,
+        "engine": "AI FLUX",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_1_hero.webp"
+      },
+      {
+        "slot": 2,
+        "type": "side_profile_90deg",
+        "filename": "SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_2_side.webp",
+        "dimension": "1000x1000",
+        "size_kb": 61.8,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_2_side.webp"
+      },
+      {
+        "slot": 3,
+        "type": "outsole_tread_cleats",
+        "filename": "SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_3_tread.webp",
+        "dimension": "1000x1000",
+        "size_kb": 43.7,
+        "engine": "AI FLUX",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_3_tread.webp"
+      },
+      {
+        "slot": 4,
+        "type": "contextual_in_use",
+        "filename": "SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_4_usage.webp",
+        "dimension": "1000x1000",
+        "size_kb": 19.6,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_001_AP_Boots_XTR_Hitam_Sepatu_slot_4_usage.webp"
+      }
+    ]
+  },
+  {
+    "sku": "SHP-002",
+    "folder": "AP_Boots_TERRA_ECO_3_Hitam_Sepatu_Boot_PVC",
+    "name": "AP Boots TERRA ECO 3 Hitam - Sepatu Boot PVC",
+    "duration_sec": 4.31,
+    "success": true,
+    "slots": [
+      {
+        "slot": 1,
+        "type": "hero_white_bg",
+        "filename": "SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_1_hero.webp",
+        "dimension": "1000x1000",
+        "size_kb": 71.5,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\02_Terra_Series\\SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_1_hero.webp"
+      },
+      {
+        "slot": 2,
+        "type": "side_profile_90deg",
+        "filename": "SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_2_side.webp",
+        "dimension": "1000x1000",
+        "size_kb": 30.3,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\02_Terra_Series\\SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_2_side.webp"
+      },
+      {
+        "slot": 3,
+        "type": "outsole_tread_cleats",
+        "filename": "SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_3_tread.webp",
+        "dimension": "1000x1000",
+        "size_kb": 28.2,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\02_Terra_Series\\SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_3_tread.webp"
+      },
+      {
+        "slot": 4,
+        "type": "contextual_in_use",
+        "filename": "SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_4_usage.webp",
+        "dimension": "1000x1000",
+        "size_kb": 23.9,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\02_Terra_Series\\SHP_002_AP_Boots_TERRA_ECO_3_Hita_slot_4_usage.webp"
+      }
+    ]
+  },
+  {
+    "sku": "SHP-003",
+    "folder": "AP_Boots_AP_1_Hitam_Sepatu_Boots_PVC",
+    "name": "AP Boots AP 1 Hitam - Sepatu Boots PVC",
+    "duration_sec": 3.89,
+    "success": true,
+    "slots": [
+      {
+        "slot": 1,
+        "type": "hero_white_bg",
+        "filename": "SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_1_hero.webp",
+        "dimension": "1000x1000",
+        "size_kb": 81.1,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_1_hero.webp"
+      },
+      {
+        "slot": 2,
+        "type": "side_profile_90deg",
+        "filename": "SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_2_side.webp",
+        "dimension": "1000x1000",
+        "size_kb": 51.2,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_2_side.webp"
+      },
+      {
+        "slot": 3,
+        "type": "outsole_tread_cleats",
+        "filename": "SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_3_tread.webp",
+        "dimension": "1000x1000",
+        "size_kb": 21.9,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_3_tread.webp"
+      },
+      {
+        "slot": 4,
+        "type": "contextual_in_use",
+        "filename": "SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_4_usage.webp",
+        "dimension": "1000x1000",
+        "size_kb": 19.6,
+        "engine": "Studio Canvas",
+        "path": "D:\\Work\\Hots\\Product Input\\Output\\Photobank_Siap_Upload\\07_Classic_Boots\\SHP_003_AP_Boots_AP_1_Hitam_Sepat_slot_4_usage.webp"
+      }
+    ]
+  }
+]
