@@ -29,6 +29,7 @@ CATALOG_IMAGES_DIR = os.path.join(BASE_DIR, "Images_Produk_Katalog")
 SHOPEE_APBOOTS_CSV = os.path.join(BASE_DIR, "Input", "shopee-co-id-2026-10-apboots.csv")
 SHOPEE_PETROVA_CSV = os.path.join(BASE_DIR, "Input", "shopee-co-id-2026-10-petrova.csv")
 DB_PATH = os.path.join(BASE_DIR, "Database", "alibaba_master.db")
+FLOW_DIR = os.path.join(BASE_DIR, "Flow")
 
 # User agent for downloading Shopee CDN images
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -487,6 +488,14 @@ def save_uploaded_product_image(folder_name, image_bytes, image_type="hero"):
     img.thumbnail((1000, 1000), Image.Resampling.LANCZOS)
     img.save(dest_path, "WEBP", quality=92, method=6)
 
+    # Optional sync to Flow directory
+    if os.path.exists(FLOW_DIR):
+        try:
+            import shutil
+            shutil.copy2(dest_path, os.path.join(FLOW_DIR, filename))
+        except Exception:
+            pass
+
     # Update JSON
     json_path = os.path.join(folder_path, f"{folder_name}.json")
     if os.path.exists(json_path):
@@ -497,6 +506,10 @@ def save_uploaded_product_image(folder_name, image_bytes, image_type="hero"):
                 data.setdefault("local_assets_inventory", {})["hero_image"] = filename
             elif image_type == "side":
                 data.setdefault("local_assets_inventory", {})["side_image"] = filename
+            elif image_type == "tread":
+                data.setdefault("local_assets_inventory", {})["tread_image"] = filename
+            elif image_type == "usage":
+                data.setdefault("local_assets_inventory", {})["usage_image"] = filename
             with open(json_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
         except Exception:

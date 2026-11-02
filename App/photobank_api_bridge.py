@@ -311,6 +311,9 @@ def generate_product_variations_custom(
         gen_img = None
         if engine == "google_ai_studio" and api_key:
             gen_img = fetch_google_ai_studio_image(slot1_prompt, api_key, target_size)
+            if not gen_img:
+                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 1...")
+                gen_img = fetch_ai_generated_image(slot1_prompt, target_size)
         elif engine == "ai_flux":
             gen_img = fetch_ai_generated_image(slot1_prompt, target_size)
 
@@ -342,6 +345,9 @@ def generate_product_variations_custom(
         gen_img2 = None
         if engine == "google_ai_studio" and api_key:
             gen_img2 = fetch_google_ai_studio_image(slot2_prompt, api_key, target_size)
+            if not gen_img2:
+                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 2...")
+                gen_img2 = fetch_ai_generated_image(slot2_prompt, target_size)
         elif engine == "ai_flux":
             gen_img2 = fetch_ai_generated_image(slot2_prompt, target_size)
 
@@ -375,6 +381,9 @@ def generate_product_variations_custom(
         gen_img3 = None
         if engine == "google_ai_studio" and api_key:
             gen_img3 = fetch_google_ai_studio_image(slot3_prompt, api_key, target_size)
+            if not gen_img3:
+                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 3...")
+                gen_img3 = fetch_ai_generated_image(slot3_prompt, target_size)
         elif engine == "ai_flux":
             gen_img3 = fetch_ai_generated_image(slot3_prompt, target_size)
 
@@ -415,6 +424,9 @@ def generate_product_variations_custom(
         gen_img4 = None
         if engine == "google_ai_studio" and api_key:
             gen_img4 = fetch_google_ai_studio_image(slot4_prompt, api_key, target_size)
+            if not gen_img4:
+                print("[AI Fallback] Google AI Studio key rejected or failed; using FLUX Generative Diffusion for Slot 4...")
+                gen_img4 = fetch_ai_generated_image(slot4_prompt, target_size)
         elif engine == "ai_flux":
             gen_img4 = fetch_ai_generated_image(slot4_prompt, target_size)
 
