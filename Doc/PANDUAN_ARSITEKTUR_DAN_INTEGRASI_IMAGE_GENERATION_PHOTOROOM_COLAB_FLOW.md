@@ -196,3 +196,4 @@ Untuk hasil optimal dengan biaya dan waktu yang efisien, berikut adalah rekomend
 * **Master Agent Prompt File:** [`Doc/FLOW_10_PRODUCTS_AGENT_PROMPT.md`](file:///d:/Work/Hots/Product%20Input/Doc/FLOW_10_PRODUCTS_AGENT_PROMPT.md)
 * **Paket ZIP Hasil Batch 10 Produk:** [`Output/Flow_10_Products_Assets_HOTS.zip`](file:///d:/Work/Hots/Product%20Input/Output/Flow_10_Products_Assets_HOTS.zip)
 * **Backend Bridge & Routing:** [`App/photobank_api_bridge.py`](file:///d:/Work/Hots/Product%20Input/App/photobank_api_bridge.py) dan [`App/alibaba_manager_app.py`](file:///d:/Work/Hots/Product%20Input/App/alibaba_manager_app.py)
+
